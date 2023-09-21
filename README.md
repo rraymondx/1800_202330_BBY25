@@ -9,8 +9,7 @@ List team members and/or short bio's here...
 * Hi, my name is Raymond. I am excited to learn and build a program from the start!!
 * Hi, my name is Bavneet. I am excited to be here.
 * Hi, my name is Will. I love Git and Github. My favorite color is blue and I love cats and dogs. I have blonde hair. That was a lie. I am the best! No seriously, I'm cool!
-* ...
-* Hi, my name is Will. I love Git and Github. My favorite color is blue and I love cats and dogs. I have blonde hair. That was a lie. nah
+
 	
 ## 3. Technologies and Resources Used
 List technologies (with version numbers), API's, icons, fonts, images, media or data sources, and other resources that were used.
