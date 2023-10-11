@@ -1,4 +1,36 @@
-.iconImage {
-    max-width:100%;
-    max-height:max-content;
+/*
+
+==+=== INFORMATION ===+==
+
+=== Colors ===
+    #a9e7fb
+    #eddb70
+    #50cfe1
+    #a1e599
+    #f6faf1
+
+=== Misc ===
+
+*/
+
+/* LANDING PAGE CSS */
+
+/* Color Definitions */
+.bg-info {
+    background-color: #a9e7fb !important;   
+}
+
+/* Navbar */
+.navbar-brand {
+    color: #f6faf1 !important;
+}
+.nav-link:active {
+    color: #eddb70;
+}
+.nav-link {
+    color: #50cfe1;
+}
+.img-icon-fluid {
+    max-width: 10%;
+    height: 10%;
 }

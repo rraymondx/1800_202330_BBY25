@@ -21,74 +21,71 @@
     <!-- Other libraries go here -->
 
     <!-- Link to styles of your own -->
-    <link href="./styles/style.css" rel="stylesheet1"/>
-    <!-- <link rel="stylesheet" href="./styles/style.css"> -->
+    <link rel="stylesheet" href="./styles/style.css"/>
 
 </head>
 
 <body>
-    <!------------------------------>
-    <!-- Your HTML Layout go here -->
+    <!-- Main page div -->
+    <div class="parent-div">
 
-    <!------------------------------>
-    <!-- Stuff for body goes here -->
+        <!-- Webpage navbar -->
+        <nav class="navbar navbar-expand-lg bg-info">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    <img class="img-icon-fluid" src="./images/Icons/websiteIconVersion1.png" alt="icon image">
+                    HowRu </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">The Space</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Post</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Messages</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
 
-    <!-- Webpage navbar -->
-    <nav class="navbar navbar-expand-lg bg-info">
-        <div class="container-fluid">
-            <img src="./images/Icons/brainIcon.png" class="iconImage" alt="icon image">
-            <a class="navbar-brand" href="#">HowRu</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">The Space</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Post</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Messages</a>
-                    </li>
-                </ul>
+        <!-- Welcome -->
+        <div class="px-4 pt-5 my-5 text-center border-bottom">
+            <h1 class="display-4 fw-bold">Welcome</h1>
+            <img class="img-fluid" src="./images/icons/websiteIconVersion2.png" alt="landingPageImage">
+            <div class="col-lg-6 mx-auto">
+                <p class="lead mb-4">Join HOWRU today to track your mood and and share it with those around you. </p>
+                <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
+                    <button type="button" class="btn btn-primary btn-lg px-4 me-sm-3">Login</button>
+                    <button type="button" class="btn btn-outline-secondary btn-lg px-4">Signup</button>
+                </div>
+            </div>
+            <div class="overflow-hidden" style="max-height: 30vh;">
+                <div class="container px-5">
+                    <img src="bootstrap-docs.png" class="img-fluid border rounded-3 shadow-lg mb-4" alt="Example image"
+                        width="700" height="500" loading="lazy">
+                </div>
             </div>
         </div>
-    </nav>
 
-    <!-- Welcome -->
-    <div class="b-example-divider"></div>
+        <!-- Card Field -->
 
-    <div class="px-4 pt-5 my-5 text-center border-bottom">
-        <h1 class="display-4 fw-bold">Centered screenshot</h1>
-        <div class="col-lg-6 mx-auto">
-            <p class="lead mb-4">Join HOWRU today to track your mood and and share it with those around you. </p>
-            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
-                <button type="button" class="btn btn-primary btn-lg px-4 me-sm-3">Login</button>
-                <button type="button" class="btn btn-outline-secondary btn-lg px-4">Signup</button>
-            </div>
-        </div>
-        <div class="overflow-hidden" style="max-height: 30vh;">
-            <div class="container px-5">
-                <img src="bootstrap-docs.png" class="img-fluid border rounded-3 shadow-lg mb-4" alt="Example image"
-                    width="700" height="500" loading="lazy">
-            </div>
-        </div>
+        
+        <!-- Footer -->
+        <footer>
+            <hr>
+            <p style="text-align: center;">&copy copyright 2023</p>
+        </footer>   
     </div>
-
-    <!-- Card Field -->
-
-    
-    <!-- Footer -->
-    <footer>
-        <hr>
-        <p style="text-align: center;">&copy copyright 2023</p>
-    </footer>
 
     <!---------------------------------------------->
     <!-- Your own JavaScript functions go here    -->
