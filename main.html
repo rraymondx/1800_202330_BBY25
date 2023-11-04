@@ -44,39 +44,63 @@
     <nav id="navbarPlaceholder"></nav>
 
     <!-- Welcome -->
-    <div class="px-4 pt-5 pb-5 my-5 text-center border-bottom">
-      <div class="container bg-light p-5">
-        <h1 class="display-4">Welcome back to HowRu, <span id="name-goes-here"> </span></h1>
-      </div>
+    <div class="px-4 pt-5 pb-5 my-5 text-center">
+      <h1 class="display-4">Welcome back to HowRu, <span class="name-goes-here"> </span></h1>
     </div>
 
     <!-- Cards -->
-    <div id="main-card-container-1" class="card-group">
+    <div id="main-card-container-1">
 
-      <!-- The Space -->
+      <!-- Posting to the space -->
       <div class="card">
         <div class="card-header">
-          Access The Space
+          <h4><span class="name-goes-here"></span></h4>
         </div>
-        <div class="card-body">
-          <h5 class="card-title">The Space</h5>
-          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-          <a href="space.html" class="btn btn-primary">Go</a>
+        <div class="card-body text-center">
+          <p class="card-text">HowRu? Share your thoughts and feelings with others.</p>
+          <a href="space.html" class="btn btn-primary">Post to the space.</a>
         </div>
-      </div>
-
-      <!-- Messaging -->
-      <div class="card">
-        <div class="card-header">
-          View Messages
-        </div>
-        <div class="card-body">
-          <h5 class="card-title">Messages</h5>
-          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-          <a href="messaging.html" class="btn btn-primary">Go</a>
+        <div class="card-footer text-muted">
+          <p> 
+            Current location <span class="location-goes-here"></span>, 
+            Current mood <span class="mood-goes-here"></span>.
+          </p>
         </div>
       </div>
+      
+      <br>
 
+      <div class="row row-cols-2">
+
+        <!-- The Space -->
+        <div class="col">
+          <div class="card">
+            <div class="card-header">
+              Access The Space
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">The Space</h5>
+              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+              <a href="space.html" class="btn btn-primary">Go</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Messaging -->
+        <div class="col">
+          <div class="card">
+            <div class="card-header">
+              View Messages
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">Messages</h5>
+              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+              <a href="messaging.html" class="btn btn-primary">Go</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
 
     <!-- Footer -->

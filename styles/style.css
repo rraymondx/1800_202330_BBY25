@@ -8,6 +8,7 @@
     #50cfe1
     #a1e599
     #f6faf1
+    #B880FF
 
 === Misc ===
 
@@ -15,19 +16,39 @@
 
 /* LANDING PAGE CSS */
 
+body {
+    padding: 0;
+    margin: 0;
+}
+
 /* Color Definitions */
 .bg-info {
     background-color: #a9e7fb !important;   
 }
 
-/* Navbar */
+/* Global navbar css */
 .navbar-brand {
-    color: #f6faf1 !important;
+    color: #50cfe1;
 }
+
+.navbar-brand:hover {
+    color: #B880FF;
+}
+
+.nav-link:hover {
+    color: #B880FF;
+}
+
 .nav-link:active {
     color: #eddb70;
 }
+
 .nav-link {
+    color: #50cfe1;
+}
+
+/* Global user name Colors */
+.name-goes-here {
     color: #50cfe1;
 }
 
@@ -35,5 +56,4 @@
     display: flex;
     justify-content: center;
     align-items: center;
-
 }
