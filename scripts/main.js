@@ -29,6 +29,7 @@ function getNameFromAuth() {
 
 getNameFromAuth(); //run the function
 
+
 document.addEventListener('DOMContentLoaded', function() {
     const db = firebase.firestore();
     const docRef = db.collection('users').doc("REqc6UlrlOViYIsX0u3Rm4dOkZa2");
@@ -45,5 +46,36 @@ document.addEventListener('DOMContentLoaded', function() {
   });
   
 
-
+  document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM fully loaded and parsed');
+    db.collection('users').get().then((querySnapshot) => {
+      console.log(`Received ${querySnapshot.size} documents from Firestore`);
+      let locationData = [];
+      querySnapshot.forEach((doc) => {
+        const userData = doc.data();
+        console.log(`User ID: ${doc.id}, Location: ${userData.location}`);
+        locationData.push(userData.location);
+      });
+      if (locationData.length > 0) {
+        updateHTML(locationData);
+      } else {
+        console.log('No location data found');
+      }
+    }).catch((error) => {
+      console.error("Error getting documents: ", error);
+    });
+  });
+  function updateHTML(locations) {
+    let listHTML = '<ul>';
+    locations.forEach((loc) => {
+      if (loc !== undefined) {
+      listHTML += `<li>${loc}</li>`;
+      }
+    });
+    listHTML += '</ul>';
+    document.getElementById('locationList').innerHTML += listHTML;
+    console.log('Updated location list in the DOM');
+  }
+  
+  
 
