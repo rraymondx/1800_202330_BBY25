@@ -82,8 +82,9 @@ function updateMessageList() {
 // -------------------------------------------
 function uploadMessageToDatabase() {
   let sendMessage = document.getElementById("message-input").value;
-  console.log(document.getElementById("message-input").value);
   let actualMessage = currentUser + "=" + sendMessage;
+
+  document.getElementById("message-enter").reset();
 
   if (sendMessage != "") {
     conversations.update({
