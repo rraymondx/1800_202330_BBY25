@@ -31,7 +31,6 @@ getNameFromAuth(); //run the function
 
 
 document.addEventListener('DOMContentLoaded', function() {
-    const db = firebase.firestore();
     const docRef = db.collection('users').doc("REqc6UlrlOViYIsX0u3Rm4dOkZa2");
     docRef.get().then((doc) => {
       if (doc.exists) {

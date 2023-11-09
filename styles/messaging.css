@@ -250,6 +250,23 @@ body,html {
 	background-color: rgba(0, 0, 0, 0.2);
 }
 
+/* Custom Styles */
+
+#chat-display {
+	padding-left: 5em;
+	padding-right: 5em;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+#message-list-center {
+	width: 75%;
+	background-color: #f7f7f7;
+	padding: 2.5em;
+	display:grid;
+	grid-template-rows: 75vh 25vh;
+}
 
 /* width */
 
