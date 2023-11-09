@@ -25,11 +25,20 @@ function getUserId() {
 // Populate the message list with messages from the conversation.
 // --------------------------------------------------------------
 function populateMessage(messageArr, i) {
-  let messageTemplate = document.getElementById("message-template");
-  let messageList = document.getElementById("message-list");
+  let messageTemplate;
+  let message;
 
+  let messageList = document.getElementById("message-list");
   let mesComp = messageArr[i].split("=");
-  let message = messageTemplate.content.cloneNode(true);
+
+  if (mesComp[0] == currentUser) {
+    messageTemplate = document.getElementById("message-template-1");
+    message = messageTemplate.content.cloneNode(true);
+  } else {
+    messageTemplate = document.getElementById("message-template-2");
+    message = messageTemplate.content.cloneNode(true);
+  }
+
   message.querySelector("#msg-goes-here").innerHTML = mesComp[1];
   messageList.appendChild(message);
 }
