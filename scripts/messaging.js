@@ -42,7 +42,7 @@ function populateMessageList() {
         }
       }
     }
-  })
+  });
 }
 
 // -----------------------------------------
@@ -66,7 +66,7 @@ function updateMessageList() {
         messageList.appendChild(message);
       }
     }
-  })
+  });
 }
 
 // -------------------------------------------
@@ -83,7 +83,7 @@ function uploadMessageToDatabase() {
     }).then(() => {
       updateMessageList();
       console.log("Messages uploaded successfully.");
-    })
+    });
   }
 }
 
