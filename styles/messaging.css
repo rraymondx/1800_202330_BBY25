@@ -272,6 +272,8 @@ body,html {
 	overflow-x: hidden;
 	overflow-y: auto;
 	position: relative;
+	display: flex;
+	flex-direction: column-reverse;
 }
 
 /* width */
