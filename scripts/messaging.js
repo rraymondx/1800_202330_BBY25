@@ -61,6 +61,13 @@ function loadMessageList() {
   });
 }
 
+// -----------------------------
+// Updates the messaging scroll.
+// -----------------------------
+function updateScroll(){
+  
+}
+
 // -----------------------------------------
 // Get the newest message from the datastore
 // -----------------------------------------
@@ -75,6 +82,7 @@ function updateMessageList() {
       }
     }
   });
+  updateScroll();
 }
 
 // -------------------------------------------
@@ -98,3 +106,4 @@ function uploadMessageToDatabase() {
 
 getUserId();
 loadMessageList();
+updateScroll();
