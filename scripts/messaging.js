@@ -24,10 +24,20 @@ function getUserId() {
 // --------------------------------------------------------------
 // Populate the message list with messages from the conversation.
 // --------------------------------------------------------------
-function populateMessageList() {
+function populateMessage(messageArr, i) {
   let messageTemplate = document.getElementById("message-template");
   let messageList = document.getElementById("message-list");
 
+  let mesComp = messageArr[i].split("=");
+  let message = messageTemplate.content.cloneNode(true);
+  message.querySelector("#msg-goes-here").innerHTML = mesComp[1];
+  messageList.appendChild(message);
+}
+
+// ----------------------------------------------------------
+// Load the message list with messages from the conversation.
+// ----------------------------------------------------------
+function loadMessageList() {
   conversations.get().then(doc => {
     if (!doc.exists) {
       console.log("not working");
@@ -35,10 +45,7 @@ function populateMessageList() {
       if (doc.data().messages != null) {
         let messageArr = doc.data().messages;
         for (let i = 0; i < messageArr.length; i++) {
-          let mesComp = messageArr[i].split("=");
-          let message = messageTemplate.content.cloneNode(true);
-          message.querySelector("#msg-goes-here").innerHTML = mesComp[1];
-          messageList.appendChild(message);
+          populateMessage(messageArr, i);
         }
       }
     }
@@ -49,21 +56,13 @@ function populateMessageList() {
 // Get the newest message from the datastore
 // -----------------------------------------
 function updateMessageList() {
-  let messageTemplate = document.getElementById("message-template");
-  let messageList = document.getElementById("message-list");
-
   conversations.onSnapshot(doc => {
     if (!doc.exists) {
       console.log("not working");
     } else {
       if (doc.data().messages != null) {
         let messageArr = doc.data().messages;
-        let lastMessageIndex = messageArr.length - 1;
-
-        let mesComp = messageArr[lastMessageIndex].split("=");
-        let message = messageTemplate.content.cloneNode(true);
-        message.querySelector("#msg-goes-here").innerHTML = mesComp[1];
-        messageList.appendChild(message);
+        populateMessage(messageArr, (messageArr.length - 1));
       }
     }
   });
@@ -88,4 +87,4 @@ function uploadMessageToDatabase() {
 }
 
 getUserId();
-populateMessageList();
+loadMessageList();
