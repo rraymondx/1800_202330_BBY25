@@ -75,23 +75,6 @@ function updateScroll(){
   messageElement.scrollIntoView(false);
 }
 
-// -----------------------------------------
-// Get the newest message from the datastore
-// DONT TOUCH THIS.
-// -----------------------------------------
-function updateMessageList() {
-  let num = 0;
-  conversations.onSnapshot(doc => {
-      if (!doc.exists) {
-        console.log("not working");
-      } else if (num < 1) {
-        let messageArr = doc.data().messages;
-        populateMessage(messageArr, messageArr.length - 1);
-        num++;
-      }
-  });
-}
-
 // -------------------------------------------
 // Uploads messages to the firestore database.
 // -------------------------------------------
@@ -105,11 +88,24 @@ function uploadMessageToDatabase() {
     conversations.update({
       messages: firebase.firestore.FieldValue.arrayUnion(actualMessage)
     }).then(() => {
-      updateMessageList();
+      //updateMessageList();
       console.log("Messages uploaded successfully.");
     });
   }
 }
+
+// -----------------------------------------
+// Get the newest message from the datastore
+// DONT TOUCH THIS.
+// -----------------------------------------
+conversations.onSnapshot(doc => {
+  if (!doc.exists) {
+    console.log("not working");
+  } else {
+    let messageArr = doc.data().messages;
+    populateMessage(messageArr, messageArr.length - 1);
+  }
+});
 
 getUserId();
 loadMessageList();
