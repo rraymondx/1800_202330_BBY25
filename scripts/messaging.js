@@ -25,6 +25,7 @@ function getUserId() {
 // Populate the message list with messages from the conversation.
 // --------------------------------------------------------------
 function populateMessage(messageArr, i) {
+
   let messageTemplate;
   let message;
 
@@ -69,7 +70,7 @@ function loadMessageList() {
 // Updates the messaging scroll.
 // -----------------------------
 function updateScroll(){
-  console.log("Being called");
+  //console.log("Being called");
   let messageElement = document.getElementById("messages-bottom-pointer");
   messageElement.scrollIntoView(false);
 }
@@ -78,15 +79,13 @@ function updateScroll(){
 // Get the newest message from the datastore
 // -----------------------------------------
 function updateMessageList() {
-  conversations.onSnapshot(doc => {
-    if (!doc.exists) {
-      console.log("not working");
-    } else {
-      if (doc.data().messages != null) {
+  conversations.get().then(doc => {
+      if (!doc.exists) {
+        console.log("not working");
+      } else {
         let messageArr = doc.data().messages;
-        populateMessage(messageArr, (messageArr.length - 1));
+        populateMessage(messageArr, messageArr.length - 1);
       }
-    }
   });
 }
 
