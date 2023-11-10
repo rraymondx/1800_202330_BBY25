@@ -73,9 +73,12 @@ function updateScroll() {
   messageElement.scrollIntoView(false);
 }
 
-// ----------------------
+// ----------------------------------------------------------
 // Generate message code.
-// ----------------------
+// ----------------------------------------------------------
+// ArrayUnion requires unique items to be added to arrays.
+// We generate message codes to ensure that items are unique.
+// ----------------------------------------------------------
 function genRandMesgCode() {
   return Math.floor(Math.random() * (99999 - 10000 + 1) + 10000);
 }
