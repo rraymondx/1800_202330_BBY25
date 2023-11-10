@@ -4,55 +4,68 @@
 
 var currentUser;
 
-function getUserConversations() {
-
-    if (currentUser) {
-        // User is signed in, now let's get the conversations
-        var conversationsRef = db.collection("conversations");
-
-        // Query the conversations where the logged-in user is a participant
-        conversationsRef
-            .where("participants", "array-contains", user.uid)
-            .get()
-            .then((snapshot) => {
-                // Check if there are any conversations
-                if (snapshot.empty) {
-                    console.log("No matching conversations.");
-                    return;
-                }
-
-                // Create a collection entity to store the conversations
-                var userConversationsRef = db
-                    .collection("userConversations")
-                    .doc(user.uid);
-
-                // Prepare the conversations data
-                var userConversationsData = {
-                    conversations: [],
-                };
-
-                snapshot.forEach((doc) => {
-                    console.log(doc.id, "=>", doc.data());
-                    userConversationsData.conversations.push(doc.data());
-                });
-
-                // Set the conversations data in the new collection entity
-                userConversationsRef
-                    .set(userConversationsData)
-                    .then(() => {
-                        console.log("User conversations stored successfully!");
-                    })
-                    .catch((error) => {
-                        console.error("Error storing conversations: ", error);
-                    });
-            })
-            .catch((error) => {
-                console.log("Error getting documents:", error);
-            });
-    } else {
-        // No user is signed in
-        console.log("No user logged in.");
-    }
+// --------------------------------
+// Gets the ID of the current user.
+// --------------------------------
+function getUserId() {
+    firebase.auth().onAuthStateChanged(user => {
+        // Check if user is signed in:
+        if (user) {
+            currentUser = user.uid;
+            retriveUserConvos();
+        } else {
+            // No user is signed in.
+            console.log("No user is signed in");
+        }
+    });
 }
 
-getUserConversations();
+function generateConvoName() {
+    let id = "Convo-";
+    let idNum = Math.random(100000000000);
+
+    return id + idNum;
+}
+
+// ---------------------------------------------------------
+// Gets the message chains that the user is involved in and
+// Puts them into a new collection.
+// Backwards thinking, we need to get users from reply
+// ---------------------------------------------------------
+
+/*
+function retriveUserConvos() {
+    let totalConversations = db.collection("conversations");
+
+    const q = totalConversations.where("Users", "array-contains", currentUser)
+
+    q.get()
+        .then(snapshot => {
+            // If the query returned multiple documents, you need to loop through them
+            snapshot.forEach(doc => {
+                let theUsers = (doc.id, " => ", doc.data().Users);
+
+                let conversationName = "c=" + theUsers[0] + "=" + theUsers[1];
+                console.log(conversationName);
+
+                if (!doc.exists()) {
+                    db.collection("userConversations").doc(conversationName).set({
+                        users: theUsers
+                    }).then(function (){
+                        console.log("New Document");
+                    }).catch(function (error) {
+                        console.log("Error occured" + error);
+                    })
+                }
+            });
+        })
+        .catch(error => {
+            // It's important to catch any errors that occur during the get
+            console.error("Error getting documents: ", error);
+        });
+} 
+
+Code is useless btw.
+
+*/
+getUserId();
