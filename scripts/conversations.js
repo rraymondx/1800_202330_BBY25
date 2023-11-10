@@ -7,25 +7,25 @@ var currentUser;
 // --------------------------------
 // Gets the ID of the current user.
 // --------------------------------
-function getUserId() {
-    firebase.auth().onAuthStateChanged(user => {
-        // Check if user is signed in:
-        if (user) {
-            currentUser = user.uid;
-            retriveUserConvos();
-        } else {
-            // No user is signed in.
-            console.log("No user is signed in");
-        }
-    });
-}
+// function getUserId() {
+//     firebase.auth().onAuthStateChanged(user => {
+//         // Check if user is signed in:
+//         if (user) {
+//             currentUser = user.uid;
+//             retriveUserConvos();
+//         } else {
+//             // No user is signed in.
+//             console.log("No user is signed in");
+//         }
+//     });
+// }
 
-function generateConvoName() {
-    let id = "Convo-";
-    let idNum = Math.random(100000000000);
+// function generateConvoName() {
+//     let id = "Convo-";
+//     let idNum = Math.random(100000000000);
 
-    return id + idNum;
-}
+//     return id + idNum;
+// }
 
 // ---------------------------------------------------------
 // Gets the message chains that the user is involved in and
@@ -68,4 +68,4 @@ function retriveUserConvos() {
 Code is useless btw.
 
 */
-getUserId();
+// getUserId();
