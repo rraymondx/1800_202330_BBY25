@@ -25,7 +25,6 @@ function getUserId() {
 // Populate the message list with messages from the conversation.
 // --------------------------------------------------------------
 function populateMessage(messageArr, i) {
-
   let messageTemplate;
   let message;
 
@@ -34,7 +33,7 @@ function populateMessage(messageArr, i) {
   let messageList = document.getElementById("messages-container");
   let mesComp = messageArr[i].split("=");
 
-  if (mesComp[0] == currentUser) {
+  if (mesComp[1] == currentUser) {
     messageTemplate = document.getElementById("message-template-1");
     message = messageTemplate.content.cloneNode(true);
   } else {
@@ -42,7 +41,7 @@ function populateMessage(messageArr, i) {
     message = messageTemplate.content.cloneNode(true);
   }
 
-  message.querySelector("#msg-goes-here").innerHTML = mesComp[1];
+  message.querySelector("#msg-goes-here").innerHTML = mesComp[2];
   messageList.insertBefore(message, pointer);
 
   updateScroll();
@@ -74,23 +73,30 @@ function updateScroll() {
   messageElement.scrollIntoView(false);
 }
 
+// ----------------------
+// Generate message code.
+// ----------------------
+function genRandMesgCode() {
+  return Math.floor(Math.random() * (99999 - 10000 + 1) + 10000);
+}
+
 // -------------------------------------------
 // Uploads messages to the firestore database.
 // -------------------------------------------
 function uploadMessageToDatabase() {
   let sendMessage = document.getElementById("message-input").value;
-  let actualMessage = currentUser + "=" + sendMessage;
+  let actualMessage = genRandMesgCode() + "=" + currentUser + "=" + sendMessage;
+
+  console.log(actualMessage);
 
   document.getElementById("message-enter").reset();
 
-  if (sendMessage != "") {
-    conversations.update({
-      messages: firebase.firestore.FieldValue.arrayUnion(actualMessage)
-    }).then(() => {
-      //updateMessageList();
-      console.log("Messages uploaded successfully.");
-    });
-  }
+  conversations.update({
+    messages: firebase.firestore.FieldValue.arrayUnion(actualMessage)
+  }).then(() => {
+    //updateMessageList();
+    console.log("Messages uploaded successfully.");
+  });
 }
 
 // -----------------------------------------
@@ -98,10 +104,10 @@ function uploadMessageToDatabase() {
 // DONT TOUCH THIS.
 // -----------------------------------------
 conversations.onSnapshot(doc => {
+  let messageArr = doc.data().messages;
   if (!doc.exists) {
     console.log("not working");
   } else {
-    let messageArr = doc.data().messages;
     populateMessage(messageArr, messageArr.length - 1);
   }
 });
