@@ -268,10 +268,10 @@ body,html {
 	grid-template-rows: 75vh 25vh;
 }
 
-#message-list {
-	overflow-x: hidden;
-	overflow-y: auto;
+#messages-container {
+	height: 100%;
 	position: relative;
+	overflow: scroll;
 }
 
 /* width */

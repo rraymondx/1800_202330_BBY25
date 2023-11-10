@@ -28,7 +28,9 @@ function populateMessage(messageArr, i) {
   let messageTemplate;
   let message;
 
-  let messageList = document.getElementById("message-list");
+  let pointer = document.getElementById("messages-bottom-pointer");
+
+  let messageList = document.getElementById("messages-container");
   let mesComp = messageArr[i].split("=");
 
   if (mesComp[0] == currentUser) {
@@ -40,7 +42,9 @@ function populateMessage(messageArr, i) {
   }
 
   message.querySelector("#msg-goes-here").innerHTML = mesComp[1];
-  messageList.appendChild(message);
+  messageList.insertBefore(message, pointer);
+
+  updateScroll();
 }
 
 // ----------------------------------------------------------
@@ -65,7 +69,9 @@ function loadMessageList() {
 // Updates the messaging scroll.
 // -----------------------------
 function updateScroll(){
-  
+  console.log("Being called");
+  let messageElement = document.getElementById("messages-bottom-pointer");
+  messageElement.scrollIntoView(false);
 }
 
 // -----------------------------------------
@@ -82,7 +88,6 @@ function updateMessageList() {
       }
     }
   });
-  updateScroll();
 }
 
 // -------------------------------------------
@@ -106,4 +111,3 @@ function uploadMessageToDatabase() {
 
 getUserId();
 loadMessageList();
-updateScroll();
