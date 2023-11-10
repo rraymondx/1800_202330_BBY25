@@ -79,7 +79,7 @@ function updateScroll(){
 // Get the newest message from the datastore
 // -----------------------------------------
 function updateMessageList() {
-  conversations.get().then(doc => {
+  conversations.onSnapshot(doc => {
       if (!doc.exists) {
         console.log("not working");
       } else {
