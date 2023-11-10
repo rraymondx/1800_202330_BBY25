@@ -77,14 +77,17 @@ function updateScroll(){
 
 // -----------------------------------------
 // Get the newest message from the datastore
+// DONT TOUCH THIS.
 // -----------------------------------------
 function updateMessageList() {
+  let num = 0;
   conversations.onSnapshot(doc => {
       if (!doc.exists) {
         console.log("not working");
-      } else {
+      } else if (num < 1) {
         let messageArr = doc.data().messages;
         populateMessage(messageArr, messageArr.length - 1);
+        num++;
       }
   });
 }
