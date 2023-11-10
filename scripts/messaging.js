@@ -69,8 +69,7 @@ function loadMessageList() {
 // -----------------------------
 // Updates the messaging scroll.
 // -----------------------------
-function updateScroll(){
-  //console.log("Being called");
+function updateScroll() {
   let messageElement = document.getElementById("messages-bottom-pointer");
   messageElement.scrollIntoView(false);
 }
