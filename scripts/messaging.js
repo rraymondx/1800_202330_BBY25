@@ -31,7 +31,7 @@ function populateMessage(messageArr, i) {
   let pointer = document.getElementById("messages-bottom-pointer");
 
   let messageList = document.getElementById("messages-container");
-  let mesComp = messageArr[i].split("=");
+  let mesComp = messageArr[i].split("\r");
 
   if (mesComp[1] == currentUser) {
     messageTemplate = document.getElementById("message-template-1");
@@ -88,7 +88,7 @@ function genRandMesgCode() {
 // -------------------------------------------
 function uploadMessageToDatabase() {
   let sendMessage = document.getElementById("message-input").value;
-  let actualMessage = genRandMesgCode() + "=" + currentUser + "=" + sendMessage;
+  let actualMessage = genRandMesgCode() + "\r" + currentUser + "\r" + sendMessage;
 
   document.getElementById("message-enter").reset();
 
