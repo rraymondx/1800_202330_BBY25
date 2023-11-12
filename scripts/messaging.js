@@ -90,16 +90,16 @@ function uploadMessageToDatabase() {
   let sendMessage = document.getElementById("message-input").value;
   let actualMessage = genRandMesgCode() + "=" + currentUser + "=" + sendMessage;
 
-  console.log(actualMessage);
-
   document.getElementById("message-enter").reset();
 
-  conversations.update({
-    messages: firebase.firestore.FieldValue.arrayUnion(actualMessage)
-  }).then(() => {
-    //updateMessageList();
-    console.log("Messages uploaded successfully.");
-  });
+  if (sendMessage != "") {
+    conversations.update({
+      messages: firebase.firestore.FieldValue.arrayUnion(actualMessage)
+    }).then(() => {
+      //updateMessageList();
+      console.log("Messages uploaded successfully.");
+    });
+  }
 }
 
 // -----------------------------------------

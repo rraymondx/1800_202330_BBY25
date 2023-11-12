@@ -77,11 +77,11 @@
 				</div>
 			</div>
 			<div class="container">
-				<form id="message-enter">
+				<form onsubmit="uploadMessageToDatabase();return false" id="message-enter">
 					<fieldset class="mb-3" id="personalInfoFields">
-						<input type="text" id="message-input" placeholder="Enter a message...">
+						<input type="text" id="message-input" placeholder="Enter a message..."/>
+						<button class="btn btn-info" id="send-button">Send</button>
 					</fieldset>
-					<button type="button" class="btn btn-info" onclick="uploadMessageToDatabase()" id="send-button">Send</button>
 				</form>
 			</div>
 		</div>
