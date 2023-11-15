@@ -4,6 +4,7 @@
 
 var currentUser;
 
+
 // --------------------------------
 // Gets the ID of the current user.
 // --------------------------------
@@ -23,7 +24,7 @@ function getUserId() {
 // -------------------
 // Get the other user.
 // -------------------
-async function getOtherUserName(convo, i) {
+async function getOtherUserName(convo) {
     let otherUser;
 
     convo.data().Users;
@@ -47,8 +48,9 @@ async function getOtherUserName(convo, i) {
 // ----------------------------------------------
 // Takes the user to the correct messaging chain.
 // ----------------------------------------------
-function takeToMessages() {
-    console.log("Hello world!");
+function takeToMessages(id) {
+    localStorage.setItem("convoID", id);
+    window.location.href = "./messaging.html";
 }
 
 // --------------------
@@ -65,7 +67,7 @@ async function generateCard(convo, i) {
     conversation = conversationTemplate.content.cloneNode(true);
     conversation.querySelector("#user-name").innerHTML = otherUser;
     conversation.querySelector("#contact-container").addEventListener("click", function() {
-        takeToMessages();
+        takeToMessages(convo.id);
     }, false);
     conversationList.appendChild(conversation);
 }
@@ -95,5 +97,6 @@ function toMessages(theConversation) {
     console.log("To messages.");
 }
 
-getUserId();
+if (window.location.pathname == "/conversations.html")
+    getUserId();
 
