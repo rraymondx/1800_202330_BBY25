@@ -34,6 +34,7 @@ async function getOtherUserName(convo) {
         }
     }
 
+    console.log(otherUser);
     let otherUserP = db.collection("users").doc(otherUser);
 
     try {
