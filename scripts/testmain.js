@@ -27,13 +27,13 @@ function getNameFromAuth() {
     })
 }
 
-getNameFromAuth(); //run the function
+getNameFromAuth(); //run the function  
 
-document.addEventListener('DOMContentLoaded', function () {
-    firebase.auth().onAuthStateChanged(function (user) {
+  document.addEventListener('DOMContentLoaded', function() {
+    firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
             const docRef = db.collection('users').doc(user.uid);
-            docRef.get().then(function (doc) {
+            docRef.get().then(function(doc) {
                 if (doc.exists) {
                     const geoPoint = doc.data().location;
                     const userLocation = {
@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 } else {
                     console.log('No such document!');
                 }
-            }).catch(function (error) {
+            }).catch(function(error) {
                 console.error('Error getting document:', error);
             });
         } else {
