@@ -4,6 +4,7 @@
 
 var currentUser;
 
+
 // --------------------------------
 // Gets the ID of the current user.
 // --------------------------------
@@ -23,7 +24,7 @@ function getUserId() {
 // -------------------
 // Get the other user.
 // -------------------
-function getOtherUserName(convo, i) {
+async function getOtherUserName(convo) {
     let otherUser;
 
     convo.data().Users;
@@ -33,24 +34,43 @@ function getOtherUserName(convo, i) {
         }
     }
 
+    console.log(otherUser);
     let otherUserP = db.collection("users").doc(otherUser);
 
-    otherUserP.get().then((doc) => {
-        //console.log(doc.data().name);
+    try {
+        const doc = await otherUserP.get();
         return doc.data().name;
-    });
+    } catch (error) {
+        console.error("Error fetching user string:", error);
+        // Handle error appropriately
+    }
+}
+
+// ----------------------------------------------
+// Takes the user to the correct messaging chain.
+// ----------------------------------------------
+function takeToMessages(id) {
+    localStorage.setItem("convoID", id);
+    window.location.href = "./messaging.html";
 }
 
 // --------------------
 // Generate convo list.
 // --------------------
-function generateCard(convo, i) {
-    let conversationTemplate;
+async function generateCard(convo, i) {
+    let conversationTemplate = document.getElementById("contact-card");
     let conversation;
+    let conversationList = document.getElementById("convo-container");
+    let otherUser = await getOtherUserName(convo, i);
 
-    //let conversationList = document.getElementById();
-    let otherUser = getOtherUserName(convo, i);
-    console.log(otherUser);
+    console.log(otherUser)
+
+    conversation = conversationTemplate.content.cloneNode(true);
+    conversation.querySelector("#user-name").innerHTML = otherUser;
+    conversation.querySelector("#contact-container").addEventListener("click", function() {
+        takeToMessages(convo.id);
+    }, false);
+    conversationList.appendChild(conversation);
 }
 
 // ---------------------------------------------------------
@@ -69,8 +89,15 @@ function retriveUserConvos() {
             generateCard(involvedConvos[i], i);
         }
     });
-
 }
 
-getUserId();
+// ---------------------------------------------
+// Take the user to their selected conversation.
+// ---------------------------------------------
+function toMessages(theConversation) {
+    console.log("To messages.");
+}
+
+if (window.location.pathname == "/conversations.html")
+    getUserId();
 

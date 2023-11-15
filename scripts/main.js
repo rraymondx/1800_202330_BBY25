@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
     listHTML += '</ul>';
-    document.getElementById('locationList').innerHTML += listHTML;
+    //document.getElementById('locationList').innerHTML += listHTML;
     console.log('Updated location list in the DOM');
   }
   

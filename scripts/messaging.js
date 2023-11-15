@@ -2,7 +2,7 @@
 const messageInput = document.querySelector("#type_msg");
 const sendButton = document.querySelector("#send_btn");
 
-const conversations = db.collection("conversations").doc("N9jI6iqMJ7Lm5FXqDW99");
+const conversations = db.collection("conversations").doc(localStorage.getItem("convoID"));
 
 var currentUser;
 
