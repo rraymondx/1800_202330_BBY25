@@ -36,3 +36,4 @@ function updateHTML(locations) {
   
   document.getElementById('locationList').innerHTML = listHTML;
 }
+

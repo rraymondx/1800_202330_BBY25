@@ -7,28 +7,31 @@ var ui = new firebaseui.auth.AuthUI(firebase.auth());
 var uiConfig = {
   callbacks: {
     signInSuccessWithAuthResult: function (authResult, redirectUrl) {
-      //--------------------------------------------------------------
-      // Generates Users in the Firestore database.
-      // Records their name, email, country and location (random atm).
-      //--------------------------------------------------------------
-      var user = authResult.user;
-      if (authResult.additionalUserInfo.isNewUser) {
-          db.collection("users").doc(user.uid).set({
-                 name: user.displayName,
-                 email: user.email,
-                 country: "Canada",
-                 location: Math.random(100)
-          }).then(function () {
-                 console.log("New user added to firestore");
-                 window.location.assign("main.html");
-          }).catch(function (error) {
-                 console.log("Error adding new user: " + error);
-          });
-      } else {
-          return true;
-      }
-          return false;
-      },
+        var user = authResult.user;
+        navigator.geolocation.getCurrentPosition(function (position) {
+            var userLocation = new firebase.firestore.GeoPoint(position.coords.latitude, position.coords.longitude);
+    
+            db.collection("users").doc(user.uid).set({
+                name: user.displayName || "Unknown", 
+                email: user.email,
+                country: "Canada", 
+                location: userLocation
+            }, { merge: true }).then(function () { 
+                console.log("User data updated in firestore");
+                window.location.assign("main.html");
+            }).catch(function (error) {
+                console.log("Error updating user data: " + error);
+            });
+        }, function (error) {
+            console.warn(`ERROR(${error.code}): ${error.message}`);
+            
+        });
+    
+        return false; 
+    },
+    
+    
+  
   },
   signInFlow: 'popup',
   signInSuccessUrl: "./main.html",
