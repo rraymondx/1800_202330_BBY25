@@ -56,25 +56,24 @@ getNameFromAuth(); //run the function
 // });
 
 function addUserLocationsToMap(map) {
-
     // Reading information from "users" collection in Firestore
     db.collection('users').get().then(allUsers => {
         const features = []; // Defines an empty array for user locations
 
         allUsers.forEach(doc => {
             // Check if the user has valid location data
-            if (doc.exists && doc.data().location != null && !isNaN(doc.data().location.latitude) && !isNaN(doc.data().location.longitude)) {
+            const userData = doc.data();
+            if (userData.location && !isNaN(userData.location.latitude) && !isNaN(userData.location.longitude)) {
                 // Extract coordinates of the user
-                const coordinates = [doc.data().location.longitude, doc.data().location.latitude];
-                console.log(coordinates);
-                // Extract other fields you might want, e.g., username
-                const userName = doc.data().name; // User's Name
+                const coordinates = [userData.location.longitude, userData.location.latitude];
+                // Extract user's name
+                const userName = userData.name; // Correct key for the user's name
 
                 // Push user information (properties, geometry) into the features array
                 features.push({
                     'type': 'Feature',
                     'properties': {
-                        'description': `<strong>${userName}</strong>`
+                        'description': userName
                     },
                     'geometry': {
                         'type': 'Point',
@@ -96,46 +95,46 @@ function addUserLocationsToMap(map) {
         // Creates a layer above the map displaying the user locations
         map.addLayer({
             'id': 'user-locations',
-            'type': 'circle', // Visual style of the markers
+            'type': 'circle', 
             'source': 'user-locations',
             'paint': {
-                'circle-color': '#ff6347', // Customize the color
+                'circle-color': '#ff6347',
                 'circle-radius': 6,
                 'circle-stroke-width': 2,
                 'circle-stroke-color': '#ffffff'
             }
         });
 
-        // Add interactivity for the user location markers
-        map.on('click', 'user-locations', (e) => {
-            const coordinates = e.features[0].geometry.coordinates.slice();
-            const description = e.features[0].properties.description;
-
-            while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-                coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+        
+        map.on('mouseenter', 'user-locations', (e) => {
+            if (e.features.length > 0) {
+                const userName = e.features[0].properties.description;
+                
+                new mapboxgl.Popup({ offset: 25 })
+                    .setLngLat(e.lngLat)
+                    .setHTML(`<strong>${userName}</strong>`)
+                    .addTo(map);
+                map.getCanvas().style.cursor = 'pointer';
             }
-
-            new mapboxgl.Popup()
-                .setLngLat(coordinates)
-                .setHTML(description)
-                .addTo(map);
-        });
-
-        map.on('mouseenter', 'user-locations', () => {
-            map.getCanvas().style.cursor = 'pointer';
         });
 
         map.on('mouseleave', 'user-locations', () => {
             map.getCanvas().style.cursor = '';
+            
+            const popups = document.getElementsByClassName('mapboxgl-popup');
+            while (popups.length) {
+                popups[0].remove(); 
+            }
         });
     });
 }
 
+
 function showMap() {
-    // Initialize Mapbox with your access token
+    
     mapboxgl.accessToken = 'pk.eyJ1IjoiYWRhbWNoZW4zIiwiYSI6ImNsMGZyNWRtZzB2angzanBjcHVkNTQ2YncifQ.fTdfEXaQ70WoIFLZ2QaRmQ';
 
-    // Create a new map instance
+   
     const map = new mapboxgl.Map({
         container: 'map', // Container ID
         style: 'mapbox://styles/mapbox/streets-v11', // Map style URL
