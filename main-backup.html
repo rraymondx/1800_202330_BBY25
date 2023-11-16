@@ -29,8 +29,7 @@
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
   <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" />
-  <link rel="Icon" href="./images/Icons/favicon.ico" type="image/x-icon" />
-
+  <link rel="Icon" href="./images/Icons/favicon.ico" type="image/x-icon"/>
 
   <!-------------------------------------------->
   <!------------- Other libraries -------------->
@@ -39,45 +38,74 @@
   <!-- Link to styles of your own -->
   <link rel="stylesheet" href="./styles/style.css" />
   <link rel="stylesheet" href="./styles/main.css" />
-  <link rel="stylesheet" href="main-cover.css" />
 </head>
 
-<body class="bg-dark text-secondary px-4 py-5 text-center">
-  <div class="py-5">
-    <h1 class="display-5 fw-bold text-white">HowRu,  <span class="name-goes-here"></span></h1>
-    <div class="col-lg-6 mx-auto">
-      <p class="fs-5 mb-4"></p>
-    </div>
+<body>
+  <!-- Navbar -->
+  <nav id="navbarPlaceholder"></nav>
+
+  <!-- Welcome -->
+  <div class="px-4 pt-5 pb-5 my-5 text-center">
+    <h1 class="display-4">Welcome back to HowRu, <span class="name-goes-here"> </span></h1>
   </div>
 
-  <!-- Space -->
-  <div class="card mb-3" style="background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/profiles/llama1.jpg');">
-    <div class="row no-gutters">
-      <div class="col-md">
-        <div class="card-body">
-          <h5 class="card-title">Space</h5>
-          <p class="card-text">KEKE</p>
-          <a href="space.html" class="btn btn-lg btn-light fw-bold border-black bg-white">Space</a>
+  <!-- Cards -->
+  <div id="main-card-container-1">
+
+    <!-- Posting to the space -->
+    <div class="card">
+      <div class="card-header">
+        <h4><span class="name-goes-here"></span></h4>
+      </div>
+      <div class="card-body text-center">
+        <p class="card-text">HowRu? Share your thoughts and feelings with others.</p>
+        <a href="space.html" class="btn btn-primary">Post to the space.</a>
+      </div>
+      <div class="card-footer text-muted">
+        <p>
+          Current location: <span class="location-goes-here"></span>,
+          Current mood: <span class="mood-goes-here"></span>.
+        </p>
+      </div>
+    </div>
+
+    <br>
+
+    <div class="row row-cols-2">
+
+      <!-- The Space -->
+      <div class="col">
+        <div class="card">
+          <div class="card-header">
+            Access The Space
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">The Space</h5>
+            <p class="card-text">See the how your community is feeling.</p>
+            <a href="space.html" class="btn btn-primary">Go</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Messaging -->
+      <div class="col">
+        <div class="card">
+          <div class="card-header">
+            View Messages
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Messages</h5>
+            <p class="card-text">View your messages.</p>
+            <a href="conversations.html" class="btn btn-primary">Go</a>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
-  <br>
-  <br>
-  <br>
-
-  <!-- Messages -->
-  <div class="card mb-3" style="background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/profiles/llama1.jpg');">
-    <div class="row no-gutters">
-      <div class="col-md">
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">HEHE</p>
-          <a href="conversations.html" class="btn btn-lg btn-light fw-bold border-black bg-white">Messages</a>
-        </div>
-      </div>
-    </div>
+  <!-- Footer -->
+  <div class="footerC">
+    <nav id="footerPlaceholder"> </nav>
   </div>
 
 
