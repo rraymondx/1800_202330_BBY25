@@ -3,7 +3,6 @@
 // }
 
 var currentUser;
-var otherUser;
 
 // --------------------------------
 // Gets the ID of the current user.
@@ -24,8 +23,9 @@ function getUserId() {
 // -------------------
 // Get the other user.
 // -------------------
-async function getOtherUserName(convo) {
-    convo.data().Users;
+async function getOtherUser(convo) {
+    let otherUser;
+
     for (let i = 0; i < convo.data().Users.length; i++) {
         if (convo.data().Users[i] != currentUser) {
             otherUser = convo.data().Users[i];
@@ -35,8 +35,7 @@ async function getOtherUserName(convo) {
     let otherUserP = db.collection("users").doc(otherUser);
 
     try {
-        const doc = await otherUserP.get();
-        return doc.data().name;
+        return otherUserP;
     } catch (error) {
         console.error("Error fetching user string:", error);
         // Handle error appropriately
@@ -55,7 +54,7 @@ function takeToMessages(id) {
 // Retrieve the user's icon.
 // -------------------------
 function userIcon(element, user) {
-    getUserProfileIcon(db.collection("users").doc(user))
+    getUserProfileIcon(user)
       .then(userImg => {
         element.innerHTML = '<img src="./images/profiles/' 
         + userImg + '" class="rounded-circle user_img">';
@@ -72,14 +71,15 @@ async function generateCard(convo, i) {
     let conversationTemplate = document.getElementById("contact-card");
     let conversation;
     let conversationList = document.getElementById("convo-container");
-    let otherUserName = await getOtherUserName(convo, i);
+    let otherUser = await getOtherUser(convo, i);
+    let otherUserName = await getUserProfileName(otherUser);
 
     conversation = conversationTemplate.content.cloneNode(true);
     conversation.querySelector("#user-name").innerHTML = otherUserName;
+    userIcon(conversation.querySelector("#user-image"), otherUser);
     conversation.querySelector("#contact-container").addEventListener("click", function() {
         takeToMessages(convo.id);
     }, false);
-    userIcon(conversation.querySelector("#user-image"), otherUser);
     conversationList.appendChild(conversation);
 }
 
