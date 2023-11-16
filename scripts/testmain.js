@@ -62,6 +62,9 @@ function addUserLocationsToMap(map) {
                 'circle-stroke-color': '#ffffff'
             }
         });
+
+        
+        
         let isPopupOpen = false; // Flag to track popup interaction
 
         let currentPopup = null; // Global variable to hold the current popup
