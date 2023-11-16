@@ -126,7 +126,7 @@ conversations.onSnapshot(doc => {
   let messageArr = doc.data().messages;
   if (!doc.exists) {
     console.log("not working");
-  } else {
+  } else if (messageArr.length > 0) {
     populateMessage(messageArr, messageArr.length - 1);
   }
 });
