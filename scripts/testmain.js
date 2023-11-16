@@ -1,6 +1,3 @@
-// --------------------------------------------------------
-// Populates the name-goes-here elements with the userName.
-// --------------------------------------------------------
 function populateNameClassElements(userName) {
     var nameElements = document.getElementsByClassName('name-goes-here');
     for (let i = 0; i < nameElements.length; i++) {
@@ -9,72 +6,34 @@ function populateNameClassElements(userName) {
 }
 
 function getNameFromAuth() {
-  firebase.auth().onAuthStateChanged(user => {
-        // ----------------------------
-        // Check if a user is signed in
-        // ----------------------------
+    firebase.auth().onAuthStateChanged(user => {
         if (user) {
             currentUser = db.collection("users").doc(user.uid);
             currentUser.get().then(userDoc => {
-                // Retrieve the users userName
                 var userName = userDoc.data().name;
-                // Insert userName into the page
                 populateNameClassElements(userName);
             })
         } else {
             document.querySelector("#name-goes-here").innerText = "Anon?";
         }
-    })
+    });
 }
 
-getNameFromAuth(); //run the function  
-
-//   document.addEventListener('DOMContentLoaded', function() {
-//     firebase.auth().onAuthStateChanged(function(user) {
-//         if (user) {
-//             const docRef = db.collection('users').doc(user.uid);
-//             docRef.get().then(function(doc) {
-//                 if (doc.exists) {
-//                     const geoPoint = doc.data().location;
-//                     const userLocation = {
-//                         lat: geoPoint.latitude,
-//                         lng: geoPoint.longitude
-//                     };
-//                     // Use this location in Mapbox
-//                     addUserLocationToMap(userLocation);
-//                 } else {
-//                     console.log('No such document!');
-//                 }
-//             }).catch(function(error) {
-//                 console.error('Error getting document:', error);
-//             });
-//         } else {
-//             // No user is signed in
-//             console.log('No user is signed in.');
-//         }
-//     });
-// });
+getNameFromAuth();
 
 function addUserLocationsToMap(map) {
-
-    // Reading information from "users" collection in Firestore
     db.collection('users').get().then(allUsers => {
-        const features = []; // Defines an empty array for user locations
+        const features = [];
 
         allUsers.forEach(doc => {
-            // Check if the user has valid location data
-            if (doc.exists && doc.data().location != null && !isNaN(doc.data().location.latitude) && !isNaN(doc.data().location.longitude)) {
-                // Extract coordinates of the user
-                const coordinates = [doc.data().location.longitude, doc.data().location.latitude];
-                console.log(coordinates);
-                // Extract other fields you might want, e.g., username
-                const userName = doc.data().name; // User's Name
+            const userData = doc.data();
+            if (userData.location) {
+                const coordinates = [userData.location.longitude, userData.location.latitude]; 
 
-                // Push user information (properties, geometry) into the features array
                 features.push({
                     'type': 'Feature',
                     'properties': {
-                        'description': `<strong>${userName}</strong>`
+                        'description': userData.name
                     },
                     'geometry': {
                         'type': 'Point',
@@ -84,7 +43,6 @@ function addUserLocationsToMap(map) {
             }
         });
 
-        // Adds user locations as features to the map
         map.addSource('user-locations', {
             'type': 'geojson',
             'data': {
@@ -93,83 +51,88 @@ function addUserLocationsToMap(map) {
             }
         });
 
-        // Creates a layer above the map displaying the user locations
         map.addLayer({
             'id': 'user-locations',
-            'type': 'circle', // Visual style of the markers
+            'type': 'circle', 
             'source': 'user-locations',
             'paint': {
-                'circle-color': '#ff6347', // Customize the color
-                'circle-radius': 6,
+                'circle-color': 'blue',
+                'circle-radius': 12,
                 'circle-stroke-width': 2,
                 'circle-stroke-color': '#ffffff'
             }
         });
+        let isPopupOpen = false; // Flag to track popup interaction
 
-        // Add interactivity for the user location markers
-        map.on('click', 'user-locations', (e) => {
-            const coordinates = e.features[0].geometry.coordinates.slice();
-            const description = e.features[0].properties.description;
+        let currentPopup = null; // Global variable to hold the current popup
+let currentUser = null; // Variable to track the user of the current popup
 
-            while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-                coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-            }
+map.on('mouseenter', 'user-locations', (e) => {
+    if (e.features.length > 0) {
+        const userName = e.features[0].properties.description;
 
-            new mapboxgl.Popup()
-                .setLngLat(coordinates)
-                .setHTML(description)
-                .addTo(map);
+        // Check if the popup for this user is already open
+        if (currentUser === userName) {
+            return; // Do nothing if the popup for this user is already open
+        }
+
+        // Close the existing popup if it's open for a different user
+        if (currentPopup) {
+            currentPopup.remove();
+            currentPopup = null;
+        }
+
+        // Create a new popup for the new user
+        currentPopup = new mapboxgl.Popup({ offset: 25 })
+            .setLngLat(e.lngLat)
+            .setHTML(`<strong>${userName}</strong><br><button onclick="replyToUser('${userName}')">Reply</button>`)
+            .addTo(map);
+        map.getCanvas().style.cursor = 'pointer';
+
+        // Update the currentUser variable
+        currentUser = userName;
+
+        // Set flag to true when popup is opened
+        isPopupOpen = true;
+
+        // Reset flag and clear references when popup is closed
+        currentPopup.on('close', () => {
+            isPopupOpen = false;
+            currentPopup = null;
+            currentUser = null;
         });
+    }
+});
 
-        map.on('mouseenter', 'user-locations', () => {
-            map.getCanvas().style.cursor = 'pointer';
-        });
+map.on('mouseleave', 'user-locations', () => {
+    if (!isPopupOpen && currentPopup) {
+        map.getCanvas().style.cursor = '';
+        currentPopup.remove();
+        currentPopup = null;
+        currentUser = null; // Clear the current user reference
+    }
+});
 
-        map.on('mouseleave', 'user-locations', () => {
-            map.getCanvas().style.cursor = '';
-        });
+
+       
     });
 }
 
 function showMap() {
-    // Initialize Mapbox with your access token
-    mapboxgl.accessToken = 'pk.eyJ1IjoiYWRhbWNoZW4zIiwiYSI6ImNsMGZyNWRtZzB2angzanBjcHVkNTQ2YncifQ.fTdfEXaQ70WoIFLZ2QaRmQ';
+    mapboxgl.accessToken = 'pk.eyJ1IjoiYWRhbWNoZW4zIiwiYSI6ImNsMGZyNWRtZzB2angzanBjcHVkNTQ2YncifQ.fTdfEXaQ70WoIFLZ2QaRmQ'; // Replace with your Mapbox access token
 
-    // Create a new map instance
     const map = new mapboxgl.Map({
-        container: 'map', // Container ID
-        style: 'mapbox://styles/mapbox/streets-v11', // Map style URL
-        center: [-122.964274, 49.236082], // Initial position [longitude, latitude]
-        zoom: 8.8 // Initial zoom level
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: [-122.964274, 49.236082],
+        zoom: 8.8
     });
 
-    
     map.addControl(new mapboxgl.NavigationControl(), 'top-left');
 
-    
-    db.collection('users').get().then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-            if (doc.exists && doc.data().location != null && !isNaN(doc.data().location.latitude) && !isNaN(doc.data().location.longitude)) {
-
-
-                const geoPoint = doc.data().location;
-                const userLocation = {
-                    lat: geoPoint.latitude,
-                    lng: geoPoint.longitude
-                };
-
-                
-                new mapboxgl.Marker()
-                    .setLngLat([userLocation.lng, userLocation.lat])
-                    .addTo(map);
-            }
-        });
-    }).catch((error) => {
-        console.error('Error getting documents:', error);
+    map.on('load', function() {
+        addUserLocationsToMap(map);
     });
 }
 
-
 showMap();
-
-
