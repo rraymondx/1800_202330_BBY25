@@ -3,7 +3,7 @@
 // }
 
 var currentUser;
-
+var otherUser;
 
 // --------------------------------
 // Gets the ID of the current user.
@@ -25,8 +25,6 @@ function getUserId() {
 // Get the other user.
 // -------------------
 async function getOtherUserName(convo) {
-    let otherUser;
-
     convo.data().Users;
     for (let i = 0; i < convo.data().Users.length; i++) {
         if (convo.data().Users[i] != currentUser) {
@@ -34,7 +32,6 @@ async function getOtherUserName(convo) {
         }
     }
 
-    console.log(otherUser);
     let otherUserP = db.collection("users").doc(otherUser);
 
     try {
@@ -54,6 +51,20 @@ function takeToMessages(id) {
     window.location.href = "./messaging.html";
 }
 
+// -------------------------
+// Retrieve the user's icon.
+// -------------------------
+function userIcon(element, user) {
+    getUserProfileIcon(db.collection("users").doc(user))
+      .then(userImg => {
+        element.innerHTML = '<img src="./images/profiles/' 
+        + userImg + '" class="rounded-circle user_img">';
+      })
+      .catch(error => {
+        console.error("Error getting user profile icon: ", error);
+      });
+  }
+
 // --------------------
 // Generate convo list.
 // --------------------
@@ -61,15 +72,14 @@ async function generateCard(convo, i) {
     let conversationTemplate = document.getElementById("contact-card");
     let conversation;
     let conversationList = document.getElementById("convo-container");
-    let otherUser = await getOtherUserName(convo, i);
-
-    console.log(otherUser)
+    let otherUserName = await getOtherUserName(convo, i);
 
     conversation = conversationTemplate.content.cloneNode(true);
-    conversation.querySelector("#user-name").innerHTML = otherUser;
+    conversation.querySelector("#user-name").innerHTML = otherUserName;
     conversation.querySelector("#contact-container").addEventListener("click", function() {
         takeToMessages(convo.id);
     }, false);
+    userIcon(conversation.querySelector("#user-image"), otherUser);
     conversationList.appendChild(conversation);
 }
 

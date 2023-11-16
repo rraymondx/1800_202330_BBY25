@@ -24,10 +24,10 @@ function getUserId() {
 // -------------------------
 // Retrieve the user's icon.
 // -------------------------
-function userIcon(message, user) {
+function userIcon(element, user) {
   getUserProfileIcon(db.collection("users").doc(user))
     .then(userImg => {
-      message.innerHTML = '<img src="./images/profiles/' 
+      element.innerHTML = '<img src="./images/profiles/' 
       + userImg + '" class="rounded-circle user_img">';
     })
     .catch(error => {
@@ -54,10 +54,9 @@ function populateMessage(messageArr, i) {
   } else {
     messageTemplate = document.getElementById("message-template-2");
     message = messageTemplate.content.cloneNode(true);
+    userIcon(message.querySelector("#user-img"), mesComp[1]);
 
   }
-
-  userIcon(message.querySelector("#user-img"), mesComp[1]);
   message.querySelector("#msg-goes-here").innerHTML = mesComp[2];
   messageList.insertBefore(message, pointer);
 
