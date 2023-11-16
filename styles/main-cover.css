@@ -1,9 +1,10 @@
-.card {
+.back-img {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/profiles/llama1.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat; 
 }
 
-.back-img {
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/profiles/llama1.jpg');
+#footer-color {
+    color: white;
 }
