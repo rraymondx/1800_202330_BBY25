@@ -62,25 +62,59 @@ function addUserLocationsToMap(map) {
                 'circle-stroke-color': '#ffffff'
             }
         });
+        let isPopupOpen = false; // Flag to track popup interaction
 
-        map.on('mouseenter', 'user-locations', (e) => {
-            if (e.features.length > 0) {
-                const userName = e.features[0].properties.description;
-                new mapboxgl.Popup({ offset: 25 })
-                    .setLngLat(e.lngLat)
-                    .setHTML(`<strong>${userName}</strong>`)
-                    .addTo(map);
-                map.getCanvas().style.cursor = 'pointer';
-            }
-        });
+        let currentPopup = null; // Global variable to hold the current popup
+let currentUser = null; // Variable to track the user of the current popup
 
-        map.on('mouseleave', 'user-locations', () => {
-            map.getCanvas().style.cursor = '';
-            const popups = document.getElementsByClassName('mapboxgl-popup');
-            while (popups.length) {
-                popups[0].remove();
-            }
+map.on('mouseenter', 'user-locations', (e) => {
+    if (e.features.length > 0) {
+        const userName = e.features[0].properties.description;
+
+        // Check if the popup for this user is already open
+        if (currentUser === userName) {
+            return; // Do nothing if the popup for this user is already open
+        }
+
+        // Close the existing popup if it's open for a different user
+        if (currentPopup) {
+            currentPopup.remove();
+            currentPopup = null;
+        }
+
+        // Create a new popup for the new user
+        currentPopup = new mapboxgl.Popup({ offset: 25 })
+            .setLngLat(e.lngLat)
+            .setHTML(`<strong>${userName}</strong><br><button onclick="replyToUser('${userName}')">Reply</button>`)
+            .addTo(map);
+        map.getCanvas().style.cursor = 'pointer';
+
+        // Update the currentUser variable
+        currentUser = userName;
+
+        // Set flag to true when popup is opened
+        isPopupOpen = true;
+
+        // Reset flag and clear references when popup is closed
+        currentPopup.on('close', () => {
+            isPopupOpen = false;
+            currentPopup = null;
+            currentUser = null;
         });
+    }
+});
+
+map.on('mouseleave', 'user-locations', () => {
+    if (!isPopupOpen && currentPopup) {
+        map.getCanvas().style.cursor = '';
+        currentPopup.remove();
+        currentPopup = null;
+        currentUser = null; // Clear the current user reference
+    }
+});
+
+
+       
     });
 }
 
