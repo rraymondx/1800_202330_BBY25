@@ -21,6 +21,20 @@ function getUserId() {
   });
 }
 
+// -------------------------
+// Retrieve the user's icon.
+// -------------------------
+function userIcon(message, user) {
+  getUserProfileIcon(db.collection("users").doc(user))
+    .then(userImg => {
+      message.innerHTML = '<img src="./images/profiles/' 
+      + userImg + '" class="rounded-circle user_img">';
+    })
+    .catch(error => {
+      console.error("Error getting user profile icon: ", error);
+    });
+}
+
 // --------------------------------------------------------------
 // Populate the message list with messages from the conversation.
 // --------------------------------------------------------------
@@ -36,11 +50,14 @@ function populateMessage(messageArr, i) {
   if (mesComp[1] == currentUser) {
     messageTemplate = document.getElementById("message-template-1");
     message = messageTemplate.content.cloneNode(true);
+
   } else {
     messageTemplate = document.getElementById("message-template-2");
     message = messageTemplate.content.cloneNode(true);
+
   }
 
+  userIcon(message.querySelector("#user-img"), mesComp[1]);
   message.querySelector("#msg-goes-here").innerHTML = mesComp[2];
   messageList.insertBefore(message, pointer);
 
