@@ -85,7 +85,8 @@ map.on('mouseenter', 'user-locations', (e) => {
         // Create a new popup for the new user
         currentPopup = new mapboxgl.Popup({ offset: 25 })
             .setLngLat(e.lngLat)
-            .setHTML(`<strong>${userName}</strong><br><button onclick="replyToUser('${userName}')">Reply</button>`)
+            .setHTML(`<strong>${userName}</strong><br><button onclick="window.open('${"https://d2jx2rerrg6sh3.cloudfront.net/images/news/ImageForNews_717977_16564817166775166.jpg"}', '_blank')">Request to Engage</button><br><h1> I am sad</h1>`)
+            
             .addTo(map);
         map.getCanvas().style.cursor = 'pointer';
 
