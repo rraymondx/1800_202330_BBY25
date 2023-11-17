@@ -65,13 +65,15 @@ let currentUser = null;
 
 
 function addUserLocationsToMap() {
-    // Set up a real-time listener for the moods
+    // Initially load the users and their moods
+    loadInitialUserMoods();
+
+    // Set up a real-time listener for the moods to update them as they change
     db.collection('moods').orderBy('timestamp', 'desc').onSnapshot(snapshot => {
-        let changes = snapshot.docChanges();
-        changes.forEach(change => {
+        snapshot.docChanges().forEach(change => {
             if (change.type === 'added' || change.type === 'modified') {
-                // For each change, get the user's data and update or add the mood
                 let moodData = change.doc.data();
+                // Call a function to update the mood on the map
                 updateUserMoodOnMap(moodData);
             }
         });
@@ -81,6 +83,26 @@ function addUserLocationsToMap() {
     attachMapEventListeners();
 }
 
+function loadInitialUserMoods() {
+    // Get the latest mood for each user
+    db.collection('users').get().then(allUsers => {
+        allUsers.forEach(userDoc => {
+            // For each user, get their latest mood
+            db.collection('moods')
+                .where('userId', '==', userDoc.id)
+                .orderBy('timestamp', 'desc')
+                .limit(1)
+                .get()
+                .then(moods => {
+                    if (!moods.empty) {
+                        let moodData = moods.docs[0].data();
+                        updateUserMoodOnMap(moodData);
+                    }
+                });
+        });
+    });
+}
+
 function updateUserMoodOnMap(moodData) {
     // Get the user's location and update or add the mood on the map
     db.collection('users').doc(moodData.userId).get().then(doc => {
@@ -88,7 +110,6 @@ function updateUserMoodOnMap(moodData) {
             let userData = doc.data();
             if (userData.location) {
                 let coordinates = [userData.location.longitude, userData.location.latitude];
-                // Update the map with the new mood
                 updateMapSource(coordinates, userData, moodData);
             }
         }
