@@ -50,46 +50,42 @@ body {
     justify-content: center;
 }
 
-.heart {
+.radar {
     position: relative;
-    width: 100px;
-    height: 100px;
-    background-color: red;
-    margin: 50px;
-    transform: rotate(45deg);
-    animation: pulse 1s infinite;
+    width: 200px;
+    height: 200px;
+    border: 5px solid green;
+    border-radius: 50%;
+    margin: 50px auto;
   }
   
-  .heart:before,
-  .heart:after {
-    content: '';
+  .radar-arm {
     position: absolute;
-    width: 100px;
-    height: 100px;
+    bottom: 50%; /* Center the arm in the radar */
+    left: 50%;
+    width: 50%; /* Length of the radar arm */
+    height: 2px;
+    background-color: green;
+    transform-origin: 0% 0%; /* Pivot point for rotation */
+    animation: rotate 2s linear infinite;
+  }
+
+  .dot {
+    position: absolute;
+    width: 10px;
+    height: 10px;
     background-color: red;
+    border-radius: 50%;
+    transform: translate(-50%, -50%); /* Center the dot */
   }
   
-  .heart:before {
-    border-radius: 100px 100px 0 0;
-    top: -50px;
-    left: 0;
+  @keyframes rotate {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
   }
   
-  .heart:after {
-    border-radius: 100px 100px 0 0;
-    top: 0;
-    left: 50px;
-  }
-  
-  @keyframes pulse {
-    0% {
-      transform: scale(1) rotate(45deg);
-    }
-    50% {
-      transform: scale(1.1) rotate(45deg);
-    }
-    100% {
-      transform: scale(1) rotate(45deg);
-    }
-  }
   
