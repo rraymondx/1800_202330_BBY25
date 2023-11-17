@@ -253,19 +253,19 @@ body,html {
 /* Custom Styles */
 
 #chat-display {
-	padding-left: 5em;
-	padding-right: 5em;
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	height: 100%;
 }
 
 #message-list-center {
 	width: 75%;
-	background-color: #f7f7f7;
+    background-color: rgba(123, 123, 123, 0.34324);
+	border-radius: 70px;
 	padding: 2.5em;
 	display:grid;
-	grid-template-rows: 75vh 25vh;
+	grid-template-rows: 75vh min-content;
 }
 
 #messages-container {
@@ -274,10 +274,15 @@ body,html {
 	overflow: scroll;
 }
 
+#message-input {
+	width: 100%;
+}
+
 /* width */
 
 ::-webkit-scrollbar {
 	width: 10px;
+	display: none;
 }
 
 
@@ -285,6 +290,7 @@ body,html {
 
 ::-webkit-scrollbar-track {
 	background: #f1f1f1;
+	display: none;
 }
 
 
@@ -292,6 +298,7 @@ body,html {
 
 ::-webkit-scrollbar-thumb {
 	background: #888;
+	display: none;
 }
 
 
@@ -299,6 +306,7 @@ body,html {
 
 ::-webkit-scrollbar-thumb:hover {
 	background: #555;
+	display: none;
 }
 
 @media(max-width: 576px) {

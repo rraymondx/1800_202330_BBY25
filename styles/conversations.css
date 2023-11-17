@@ -21,7 +21,7 @@
     height: 100%;
     width: 80%;
     position: relative;
-    overflow-y: hidden;
+    overflow-y: scroll;
 }
 
 #contact-container {
@@ -48,4 +48,33 @@
 
 #first-head {
     color: #62e2f3ab;
+}
+
+::-webkit-scrollbar {
+	width: 10px;
+	display: none;
+}
+
+
+/* Track */
+
+::-webkit-scrollbar-track {
+	background: #f1f1f1;
+	display: none;
+}
+
+
+/* Handle */
+
+::-webkit-scrollbar-thumb {
+	background: #888;
+	display: none;
+}
+
+
+/* Handle on hover */
+
+::-webkit-scrollbar-thumb:hover {
+	background: #555;
+	display: none;
 }
