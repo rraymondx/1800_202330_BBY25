@@ -19,109 +19,162 @@ function getNameFromAuth() {
     });
 }
 
-getNameFromAuth();
+document.getElementById('openFormButton').addEventListener('click', function() {
+    document.getElementById('moodForm').style.display = 'flex';
+});
 
-function addUserLocationsToMap(map) {
-    db.collection('users').get().then(allUsers => {
-        const features = [];
+document.getElementById('moodFormContent').addEventListener('submit', function(event) {
+    event.preventDefault();
 
-        allUsers.forEach(doc => {
-            const userData = doc.data();
-            if (userData.location) {
-                const coordinates = [userData.location.longitude, userData.location.latitude]; 
+    var mood = document.getElementById('mood').value;
+    var explanation = document.getElementById('moodExplanation').value;
 
-                features.push({
-                    'type': 'Feature',
-                    'properties': {
-                        'description': userData.name
-                    },
-                    'geometry': {
-                        'type': 'Point',
-                        'coordinates': coordinates
-                    }
-                });
-            }
+    // Get the currently signed-in user
+    var user = firebase.auth().currentUser;
+
+    if (user) {
+        // User is signed in, proceed to store the mood
+        db.collection('moods').add({
+            userId: user.uid,  // Add the user's UID to link the mood to the user
+            mood: mood,
+            explanation: explanation,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp() // Optional: add a server timestamp
+        })
+        .then(function(docRef) {
+            console.log("Document written with ID: ", docRef.id);
+            document.getElementById('moodForm').style.display = 'none';
+            document.getElementById('moodFormContent').reset();
+        })
+        .catch(function(error) {
+            console.error("Error adding document: ", error);
         });
-
-        map.addSource('user-locations', {
-            'type': 'geojson',
-            'data': {
-                'type': 'FeatureCollection',
-                'features': features
-            }
-        });
-
-        map.addLayer({
-            'id': 'user-locations',
-            'type': 'circle', 
-            'source': 'user-locations',
-            'paint': {
-                'circle-color': 'blue',
-                'circle-radius': 12,
-                'circle-stroke-width': 2,
-                'circle-stroke-color': '#ffffff'
-            }
-        });
-
+    } else {
         
+        console.log("No user is signed in.");
         
-        let isPopupOpen = false; // Flag to track popup interaction
+    }
+});
 
-        let currentPopup = null; // Global variable to hold the current popup
+let isPopupOpen = false; // Flag to track popup interaction
+let currentPopup = null; // Global variable to hold the current popup
 let currentUser = null; // Variable to track the user of the current popup
 
-map.on('mouseenter', 'user-locations', (e) => {
-    if (e.features.length > 0) {
-        const userName = e.features[0].properties.description;
+function addUserLocationsToMap(map) {
+    // First get the users
+    db.collection('users').get().then(allUsers => {
+        // Then get the moods, ordered by timestamp
+        db.collection('moods').orderBy('timestamp', 'desc').get().then(allMoods => {
+            // Create a map of userIds to their latest mood
+            const userMoods = new Map();
+            allMoods.forEach(moodDoc => {
+                const moodData = moodDoc.data();
+                // If the user's mood is not already in the map (thus ensuring we only get the latest mood)
+                if (!userMoods.has(moodData.userId)) {
+                    userMoods.set(moodData.userId, moodData);
+                }
+            });
 
-        // Check if the popup for this user is already open
-        if (currentUser === userName) {
-            return; // Do nothing if the popup for this user is already open
+            // Map over the user documents to create features
+            const features = allUsers.docs.map(userDoc => {
+                const userData = userDoc.data();
+                if (userData.location) { // Check if location data exists
+                    const userMoodData = userMoods.get(userDoc.id); // Get the mood data using the user's document ID
+                    const coordinates = [userData.location.longitude, userData.location.latitude];
+                    return {
+                        'type': 'Feature',
+                        'properties': {
+                            'description': userData.name,
+                            'mood': userMoodData ? userMoodData.mood : 'Mood not set', // Use the mood if available
+                            'moodExplanation': userMoodData ? userMoodData.explanation : 'No explanation provided' // Use the explanation if available
+                        },
+                        'geometry': {
+                            'type': 'Point',
+                            'coordinates': coordinates
+                        }
+                    };
+                }
+                return null; // Return null for documents without location
+            }).filter(feature => feature !== null); // Filter out null values
+
+            if (features.length > 0) {
+                // If a source with the same ID exists, replace its data
+                if (map.getSource('user-locations')) {
+                    map.getSource('user-locations').setData({
+                        'type': 'FeatureCollection',
+                        'features': features
+                    });
+                } else {
+                    // Otherwise, add the new source
+                    map.addSource('user-locations', {
+                        'type': 'geojson',
+                        'data': {
+                            'type': 'FeatureCollection',
+                            'features': features
+                        }
+                    });
+
+                    map.addLayer({
+                        'id': 'user-locations',
+                        'type': 'circle',
+                        'source': 'user-locations',
+                        'paint': {
+                            'circle-color': 'blue',
+                            'circle-radius': 12,
+                            'circle-stroke-width': 2,
+                            'circle-stroke-color': '#ffffff'
+                        }
+                    });
+                }
+            } else {
+                console.log('No features to add to the map.');
+            }
+        }).catch(error => {
+            console.error("Error getting moods' data: ", error);
+        }); // End of 'then' for moods
+    }).catch(error => {
+        console.error("Error getting users' data: ", error);
+    }); // End of 'then' for users
+
+    map.on('mouseenter', 'user-locations', (e) => {
+        if (e.features.length > 0) {
+            const properties = e.features[0].properties;
+            const userName = properties.description;
+            const userMood = properties.mood;
+            const moodExplanation = properties.moodExplanation;
+
+            // Close any existing popups
+            if (currentPopup) {
+                currentPopup.remove();
+            }
+
+            // Create a new popup with the mood and explanation
+            currentPopup = new mapboxgl.Popup({ offset: 25 })
+                .setLngLat(e.lngLat)
+                .setHTML(`<strong>${userName}</strong><br>Mood: ${userMood}<br>Explanation: ${moodExplanation}`)
+                .addTo(map);
+
+            map.getCanvas().style.cursor = 'pointer';
+            currentUser = userName;
+            isPopupOpen = true;
+
+            currentPopup.on('close', () => {
+                isPopupOpen = false;
+                currentPopup = null;
+                currentUser = null;
+            });
         }
+    });
 
-        // Close the existing popup if it's open for a different user
-        if (currentPopup) {
+    map.on('mouseleave', 'user-locations', () => {
+        if (!isPopupOpen && currentPopup) {
+            map.getCanvas().style.cursor = '';
             currentPopup.remove();
             currentPopup = null;
-        }
-
-         // Create a new popup for the new user
-         currentPopup = new mapboxgl.Popup({ offset: 25 })
-         .setLngLat(e.lngLat)
-         .setHTML(`<strong>${userName}</strong><br><button onclick="replyToUser('${userName}')">Request to Engage</button><br><h1> I am sad<h1>`)
-         .addTo(map);
-     map.getCanvas().style.cursor = 'pointer';
-
-
-
-        // Update the currentUser variable
-        currentUser = userName;
-
-        // Set flag to true when popup is opened
-        isPopupOpen = true;
-
-        // Reset flag and clear references when popup is closed
-        currentPopup.on('close', () => {
-            isPopupOpen = false;
-            currentPopup = null;
             currentUser = null;
-        });
-    }
-});
-
-map.on('mouseleave', 'user-locations', () => {
-    if (!isPopupOpen && currentPopup) {
-        map.getCanvas().style.cursor = '';
-        currentPopup.remove();
-        currentPopup = null;
-        currentUser = null; // Clear the current user reference
-    }
-});
-
-
-       
+        }
     });
 }
+
 
 function showMap() {
     mapboxgl.accessToken = 'pk.eyJ1IjoiYWRhbWNoZW4zIiwiYSI6ImNsMGZyNWRtZzB2angzanBjcHVkNTQ2YncifQ.fTdfEXaQ70WoIFLZ2QaRmQ'; // Replace with your Mapbox access token
@@ -141,3 +194,5 @@ function showMap() {
 }
 
 showMap();
+
+

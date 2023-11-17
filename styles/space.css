@@ -16,17 +16,8 @@ body {
     align-items: center;
 }
 
-#locationList ul {
-    border: 1px solid black; 
-    padding: 10px; 
-    margin: 10px; 
-    list-style-type: none; 
-}
 
-#locationList ul li {
-    margin-bottom: 5px; 
-    font-size: 16px;
-}
+
 
 .mapboxgl-popup button[onclick*="replyToUser"] {
     background-color: blue; /* Change to your desired color */
@@ -88,4 +79,21 @@ body {
     }
   }
   
+  #moodForm {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; 
+  }
   
+  #moodFormContent {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+  }
