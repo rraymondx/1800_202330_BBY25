@@ -108,7 +108,7 @@ function loadInitialUserMoods() {
 
 function updateUserMoodOnMap(moodData) {
     // Get the user's location and update or add the mood on the map
-    db.collection('users').doc(moodData.userId).get().then(doc => {
+    db.collection('users').doc(moodData.userId).onSnapshot(doc => {
         if (doc.exists) {
             let userData = doc.data();
             if (userData.location) {
@@ -116,12 +116,8 @@ function updateUserMoodOnMap(moodData) {
                 updateMapSource(coordinates, userData, moodData);
             }
         }
-    }).catch(error => {
-        console.error("Error getting user's location: ", error);
     });
 }
-
-
 
 
 function updateMapSource(coordinates, userData, moodData) {

@@ -5,6 +5,7 @@ const sendButton = document.querySelector("#send_btn");
 const conversations = db.collection("conversations").doc(localStorage.getItem("convoID"));
 
 var currentUser;
+var userIcon;
 
 // --------------------------------
 // Gets the ID of the current user.
@@ -24,10 +25,10 @@ function getUserId() {
 // -------------------------
 // Retrieve the user's icon.
 // -------------------------
-function userIcon(element, user) {
-  getUserProfileIcon(db.collection("users").doc(user))
+function userIcon() {
+  getUserProfileIcon(db.collection("users").doc(currentUser))
     .then(userImg => {
-      element.innerHTML = '<img src="./images/profiles/' 
+      userIcon = '<img src="./images/profiles/' 
       + userImg + '" class="rounded-circle user_img">';
     })
     .catch(error => {
@@ -54,7 +55,7 @@ function populateMessage(messageArr, i) {
   } else {
     messageTemplate = document.getElementById("message-template-2");
     message = messageTemplate.content.cloneNode(true);
-    userIcon(message.querySelector("#user-img"), mesComp[1]);
+    //userIcon(message.querySelector("#user-img"), mesComp[1]);
 
   }
   message.querySelector("#msg-goes-here").innerHTML = mesComp[2];
@@ -132,4 +133,8 @@ conversations.onSnapshot(doc => {
 });
 
 getUserId();
+
+userIcon();
+console.log(userIcon);
+
 loadMessageList();
