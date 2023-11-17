@@ -239,16 +239,45 @@ function attachMapEventListeners() {
 
 function showMap() {
     mapboxgl.accessToken = 'pk.eyJ1IjoiYWRhbWNoZW4zIiwiYSI6ImNsMGZyNWRtZzB2angzanBjcHVkNTQ2YncifQ.fTdfEXaQ70WoIFLZ2QaRmQ';
+
+    // Check if geolocation is supported
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(position => {
+            // Use current position to set map center
+            map = new mapboxgl.Map({
+                container: 'map',
+                style: 'mapbox://styles/mapbox/streets-v11',
+                center: [position.coords.longitude, position.coords.latitude],
+                zoom: 15 // Zoom closer for a more detailed view
+            });
+
+            // Add map controls and load user locations
+            map.addControl(new mapboxgl.NavigationControl(), 'top-left');
+            map.on('load', addUserLocationsToMap);
+
+        }, error => {
+            console.error("Error getting user's location: ", error);
+            // Fallback to a default location if geolocation is not available
+            initializeMapWithDefaultLocation();
+        });
+    } else {
+        console.log("Geolocation is not supported by this browser.");
+        // Fallback to a default location if geolocation is not supported
+        initializeMapWithDefaultLocation();
+    }
+}
+
+function initializeMapWithDefaultLocation() {
     map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mapbox/streets-v11',
-        center: [-122.964274, 49.236082],
-        zoom: 8.8
+        center: [-122.964274, 49.236082], // Default center
+        zoom: 8.8 // Default zoom
     });
-
     map.addControl(new mapboxgl.NavigationControl(), 'top-left');
     map.on('load', addUserLocationsToMap);
 }
+
 showMap();
 
 
