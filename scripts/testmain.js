@@ -62,18 +62,7 @@ let isPopupOpen = false;
 let currentPopup = null;
 let currentUser = null;
 
-function showMap() {
-    mapboxgl.accessToken = 'pk.eyJ1IjoiYWRhbWNoZW4zIiwiYSI6ImNsMGZyNWRtZzB2angzanBjcHVkNTQ2YncifQ.fTdfEXaQ70WoIFLZ2QaRmQ';
-    map = new mapboxgl.Map({
-        container: 'map',
-        style: 'mapbox://styles/mapbox/streets-v11',
-        center: [-122.964274, 49.236082],
-        zoom: 8.8
-    });
 
-    map.addControl(new mapboxgl.NavigationControl(), 'top-left');
-    map.on('load', addUserLocationsToMap);
-}
 
 function addUserLocationsToMap() {
     // Set up a real-time listener for the moods
@@ -111,14 +100,17 @@ function updateUserMoodOnMap(moodData) {
 function updateMapSource(coordinates, userData, moodData) {
     let source = map.getSource('user-locations');
     if (source) {
+        // Obtain the data object from the source to modify it
         let data = source._data;
-        let featureExists = data.features.find(feature => feature.properties.userId === moodData.userId);
-        if (featureExists) {
-            // Update the existing feature
-            featureExists.properties.mood = moodData.mood;
-            featureExists.properties.moodExplanation = moodData.explanation;
+        
+        // Check if the feature for the user already exists
+        let featureIndex = data.features.findIndex(feature => feature.properties.userId === moodData.userId);
+        if (featureIndex !== -1) {
+            // Update the existing feature's properties
+            data.features[featureIndex].properties.mood = moodData.mood;
+            data.features[featureIndex].properties.moodExplanation = moodData.explanation;
         } else {
-            // Add a new feature
+            // Add a new feature to the data object for the new mood
             data.features.push({
                 'type': 'Feature',
                 'properties': {
@@ -133,9 +125,11 @@ function updateMapSource(coordinates, userData, moodData) {
                 }
             });
         }
-        source.setData(data); // Update the source with the new data
+        
+        // After modifications, set the new data on the source
+        source.setData(data);
     } else {
-        // Create a new source and layer if they don't exist
+        // If the source doesn't exist, create it with the initial mood data
         map.addSource('user-locations', {
             'type': 'geojson',
             'data': {
@@ -156,6 +150,7 @@ function updateMapSource(coordinates, userData, moodData) {
             }
         });
 
+        // Also create a new layer for the source
         map.addLayer({
             'id': 'user-locations',
             'type': 'circle',
@@ -215,6 +210,18 @@ function attachMapEventListeners() {
     });
 }
 
+function showMap() {
+    mapboxgl.accessToken = 'pk.eyJ1IjoiYWRhbWNoZW4zIiwiYSI6ImNsMGZyNWRtZzB2angzanBjcHVkNTQ2YncifQ.fTdfEXaQ70WoIFLZ2QaRmQ';
+    map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: [-122.964274, 49.236082],
+        zoom: 8.8
+    });
+
+    map.addControl(new mapboxgl.NavigationControl(), 'top-left');
+    map.on('load', addUserLocationsToMap);
+}
 showMap();
 
 
