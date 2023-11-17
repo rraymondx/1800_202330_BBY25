@@ -150,5 +150,13 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
   
+  document.getElementById("messages-text-container").addEventListener('click', () => {
+    window.location.href = "./conversations.html";
+  }, false)
+
+  document.getElementById("message-text-container").addEventListener('click', () => {
+    window.location.href = "./space.html";
+  }, false)
+
   showMap();
 

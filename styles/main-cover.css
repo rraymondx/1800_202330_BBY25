@@ -22,3 +22,25 @@ body {
 #footer-color {
     color: white;
 }
+
+#messages-text-container {
+    height: 175px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#message-text-container {
+    height: 175px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#messages-text {
+    color: white;
+}
+
+.foot-color * {
+    color: white;
+}
