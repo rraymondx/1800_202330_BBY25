@@ -61,7 +61,7 @@ let currentUser = null; // Variable to track the user of the current popup
 
 function addUserLocationsToMap(map) {
     // First get the users
-    db.collection('users').get().then(allUsers => {
+    db.collection('users').onSnapshot(allUsers => {
         // Then get the moods, ordered by timestamp
         db.collection('moods').orderBy('timestamp', 'desc').get().then(allMoods => {
             // Create a map of userIds to their latest mood
@@ -131,8 +131,6 @@ function addUserLocationsToMap(map) {
         }).catch(error => {
             console.error("Error getting moods' data: ", error);
         }); // End of 'then' for moods
-    }).catch(error => {
-        console.error("Error getting users' data: ", error);
     }); // End of 'then' for users
 
     map.on('mouseenter', 'user-locations', (e) => {
