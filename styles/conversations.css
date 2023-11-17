@@ -18,9 +18,10 @@
 
 #convo-list-container {
     padding-top: 1.5em;
+    height: 100%;
+    width: 80%;
     position: relative;
 	overflow: scroll;
-    width: 80%;
 }
 
 #contact-container {
