@@ -23,7 +23,7 @@ body {
 
 /* Color Definitions */
 .bg-info {
-    background-color: #a9e7fb !important;   
+    background-color: #a9e7fb !important;
 }
 
 /* Global navbar css */
@@ -56,4 +56,9 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+/* Global Navbar Colors */
+.black-nav {
+    color: black;
 }

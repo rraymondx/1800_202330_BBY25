@@ -1,6 +1,33 @@
-#convo-list-container {
-    width: 100%;
+#user-image > img {
+    height: 50px;
+    width: 50px;
+}
+
+#huge-container {
     display: flex;
-    align-items: center;
+    padding: 2em;
     justify-content: center;
+    height: 100vh;
+}
+
+#convo-container-color {
+    background-color: rgba(137, 186, 255, 0.2);
+    border-radius: 70px;
+    width: 90%;
+}
+
+#convo-list-container {
+    padding-top: 1.5em;
+    position: relative;
+	overflow: scroll;
+    width: 80%;
+}
+
+#contact-container {
+    padding-top: 1em;
+}
+
+#contact-container-real {
+    display: grid;
+    grid-template-columns: min-content auto;
 }
