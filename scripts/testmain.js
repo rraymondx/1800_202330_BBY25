@@ -197,7 +197,7 @@ function attachMapEventListeners() {
 }
 
 function attachMapEventListeners() {
-    map.on('mouseenter', 'user-locations', (e) => {
+    map.on('click', 'user-locations', (e) => {
         if (e.features.length > 0) {
             const properties = e.features[0].properties;
             const userName = properties.description;
@@ -227,7 +227,7 @@ function attachMapEventListeners() {
         }
     });
 
-    map.on('mouseleave', 'user-locations', () => {
+    map.on('click', 'user-locations', () => {
         if (!isPopupOpen && currentPopup) {
             map.getCanvas().style.cursor = '';
             currentPopup.remove();
@@ -272,7 +272,7 @@ function initializeMapWithDefaultLocation() {
         container: 'map',
         style: 'mapbox://styles/mapbox/streets-v11',
         center: [-122.964274, 49.236082], // Default center
-        zoom: 8.8 // Default zoom
+        zoom: 30, // Default zoom
     });
     map.addControl(new mapboxgl.NavigationControl(), 'top-left');
     map.on('load', addUserLocationsToMap);
