@@ -105,13 +105,11 @@ body,html {
 .user_img {
 	height: 60px;
 	width: 60px;
-	border: 1.5px solid #f5f6fa;
 }
 
 .user_img_msg {
 	height: 40px;
 	width: 40px;
-	border: 1.5px solid #f5f6fa;
 }
 
 .img_cont {
@@ -260,8 +258,8 @@ body,html {
 }
 
 #message-list-center {
-	width: 75%;
-	background-color: rgba(137, 186, 255, 0.2);
+	width: 90%;
+    background-color: rgba(137, 186, 255, 0.2);
 	border-radius: 70px;
 	padding: 2.5em;
 	display:grid;
@@ -276,6 +274,15 @@ body,html {
 
 #message-input {
 	width: 100%;
+}
+
+#user-img > img {
+	height: 100%;
+	width: 100%;
+}
+
+#msg-goes-here {
+	color: black;
 }
 
 /* width */

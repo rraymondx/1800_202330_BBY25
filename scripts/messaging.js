@@ -86,7 +86,7 @@ function loadMessageList() {
 // -----------------------------
 function updateScroll() {
   let messageElement = document.getElementById("messages-bottom-pointer");
-  messageElement.scrollIntoView(false);
+  messageElement.scrollIntoViewIfNeeded(false);
 }
 
 // ----------------------------------------------------------
