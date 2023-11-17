@@ -84,24 +84,27 @@ function addUserLocationsToMap() {
 }
 
 function loadInitialUserMoods() {
-    // Get the latest mood for each user
     db.collection('users').get().then(allUsers => {
         allUsers.forEach(userDoc => {
-            // For each user, get their latest mood
+            // Set up a real-time listener for each user's latest mood
             db.collection('moods')
                 .where('userId', '==', userDoc.id)
                 .orderBy('timestamp', 'desc')
                 .limit(1)
-                .get()
-                .then(moods => {
-                    if (!moods.empty) {
-                        let moodData = moods.docs[0].data();
-                        updateUserMoodOnMap(moodData);
-                    }
+                .onSnapshot(snapshot => {
+                    snapshot.docChanges().forEach(change => {
+                        if (change.type === 'added' || change.type === 'modified') {
+                            let moodData = change.doc.data();
+                            updateUserMoodOnMap(moodData);
+                        }
+                    });
                 });
         });
+    }).catch(error => {
+        console.error("Error loading user moods: ", error);
     });
 }
+
 
 function updateUserMoodOnMap(moodData) {
     // Get the user's location and update or add the mood on the map
@@ -117,6 +120,9 @@ function updateUserMoodOnMap(moodData) {
         console.error("Error getting user's location: ", error);
     });
 }
+
+
+
 
 function updateMapSource(coordinates, userData, moodData) {
     let source = map.getSource('user-locations');
