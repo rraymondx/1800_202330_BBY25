@@ -61,7 +61,7 @@ let currentUser = null; // Variable to track the user of the current popup
 
 function addUserLocationsToMap(map) {
     // First get the users
-    db.collection('users').onSnapshot(allUsers => {
+    db.collection('users').get().then(allUsers => {
         // Then get the moods, ordered by timestamp
         db.collection('moods').orderBy('timestamp', 'desc').get().then(allMoods => {
             // Create a map of userIds to their latest mood
@@ -131,6 +131,8 @@ function addUserLocationsToMap(map) {
         }).catch(error => {
             console.error("Error getting moods' data: ", error);
         }); // End of 'then' for moods
+    }).catch(error => {
+        console.error("Error getting users' data: ", error);
     }); // End of 'then' for users
 
     map.on('mouseenter', 'user-locations', (e) => {
@@ -148,7 +150,7 @@ function addUserLocationsToMap(map) {
             // Create a new popup with the mood and explanation
             currentPopup = new mapboxgl.Popup({ offset: 25 })
                 .setLngLat(e.lngLat)
-                .setHTML(`<strong>${userName}</strong><br>Mood: ${userMood}<br>Explanation: ${moodExplanation}`)
+                .setHTML(`<strong>${userName}</strong><br>Mood: ${userMood}<br>Explanation: ${moodExplanation} <button onclick="replyToUser('${userName}')">Reply</button>`)
                 .addTo(map);
 
             map.getCanvas().style.cursor = 'pointer';
@@ -172,6 +174,7 @@ function addUserLocationsToMap(map) {
         }
     });
 }
+
 
 
 function showMap() {
