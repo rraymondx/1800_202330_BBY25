@@ -54,87 +54,127 @@ document.getElementById('moodFormContent').addEventListener('submit', function(e
         
     }
 });
+// Existing functions: populateNameClassElements, getNameFromAuth, etc...
 
-let isPopupOpen = false; // Flag to track popup interaction
-let currentPopup = null; // Global variable to hold the current popup
-let currentUser = null; // Variable to track the user of the current popup
+// Global variables for map interactions
+let map; // Will hold the reference to the Mapbox map object
+let isPopupOpen = false;
+let currentPopup = null;
+let currentUser = null;
 
-function addUserLocationsToMap(map) {
-    // First get the users
-    db.collection('users').get().then(allUsers => {
-        // Then get the moods, ordered by timestamp
-        db.collection('moods').orderBy('timestamp', 'desc').get().then(allMoods => {
-            // Create a map of userIds to their latest mood
-            const userMoods = new Map();
-            allMoods.forEach(moodDoc => {
-                const moodData = moodDoc.data();
-                // If the user's mood is not already in the map (thus ensuring we only get the latest mood)
-                if (!userMoods.has(moodData.userId)) {
-                    userMoods.set(moodData.userId, moodData);
+function showMap() {
+    mapboxgl.accessToken = 'pk.eyJ1IjoiYWRhbWNoZW4zIiwiYSI6ImNsMGZyNWRtZzB2angzanBjcHVkNTQ2YncifQ.fTdfEXaQ70WoIFLZ2QaRmQ';
+    map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: [-122.964274, 49.236082],
+        zoom: 8.8
+    });
+
+    map.addControl(new mapboxgl.NavigationControl(), 'top-left');
+    map.on('load', addUserLocationsToMap);
+}
+
+function addUserLocationsToMap() {
+    // Set up a real-time listener for the moods
+    db.collection('moods').orderBy('timestamp', 'desc').onSnapshot(snapshot => {
+        let changes = snapshot.docChanges();
+        changes.forEach(change => {
+            if (change.type === 'added' || change.type === 'modified') {
+                // For each change, get the user's data and update or add the mood
+                let moodData = change.doc.data();
+                updateUserMoodOnMap(moodData);
+            }
+        });
+    });
+
+    // Attach event listeners for mouse enter and leave on the map
+    attachMapEventListeners();
+}
+
+function updateUserMoodOnMap(moodData) {
+    // Get the user's location and update or add the mood on the map
+    db.collection('users').doc(moodData.userId).get().then(doc => {
+        if (doc.exists) {
+            let userData = doc.data();
+            if (userData.location) {
+                let coordinates = [userData.location.longitude, userData.location.latitude];
+                // Update the map with the new mood
+                updateMapSource(coordinates, userData, moodData);
+            }
+        }
+    }).catch(error => {
+        console.error("Error getting user's location: ", error);
+    });
+}
+
+function updateMapSource(coordinates, userData, moodData) {
+    let source = map.getSource('user-locations');
+    if (source) {
+        let data = source._data;
+        let featureExists = data.features.find(feature => feature.properties.userId === moodData.userId);
+        if (featureExists) {
+            // Update the existing feature
+            featureExists.properties.mood = moodData.mood;
+            featureExists.properties.moodExplanation = moodData.explanation;
+        } else {
+            // Add a new feature
+            data.features.push({
+                'type': 'Feature',
+                'properties': {
+                    'userId': moodData.userId,
+                    'description': userData.name,
+                    'mood': moodData.mood,
+                    'moodExplanation': moodData.explanation
+                },
+                'geometry': {
+                    'type': 'Point',
+                    'coordinates': coordinates
                 }
             });
-
-            // Map over the user documents to create features
-            const features = allUsers.docs.map(userDoc => {
-                const userData = userDoc.data();
-                if (userData.location) { // Check if location data exists
-                    const userMoodData = userMoods.get(userDoc.id); // Get the mood data using the user's document ID
-                    const coordinates = [userData.location.longitude, userData.location.latitude];
-                    return {
-                        'type': 'Feature',
-                        'properties': {
-                            'description': userData.name,
-                            'mood': userMoodData ? userMoodData.mood : 'Mood not set', // Use the mood if available
-                            'moodExplanation': userMoodData ? userMoodData.explanation : 'No explanation provided' // Use the explanation if available
-                        },
-                        'geometry': {
-                            'type': 'Point',
-                            'coordinates': coordinates
-                        }
-                    };
-                }
-                return null; // Return null for documents without location
-            }).filter(feature => feature !== null); // Filter out null values
-
-            if (features.length > 0) {
-                // If a source with the same ID exists, replace its data
-                if (map.getSource('user-locations')) {
-                    map.getSource('user-locations').setData({
-                        'type': 'FeatureCollection',
-                        'features': features
-                    });
-                } else {
-                    // Otherwise, add the new source
-                    map.addSource('user-locations', {
-                        'type': 'geojson',
-                        'data': {
-                            'type': 'FeatureCollection',
-                            'features': features
-                        }
-                    });
-
-                    map.addLayer({
-                        'id': 'user-locations',
-                        'type': 'circle',
-                        'source': 'user-locations',
-                        'paint': {
-                            'circle-color': 'blue',
-                            'circle-radius': 12,
-                            'circle-stroke-width': 2,
-                            'circle-stroke-color': '#ffffff'
-                        }
-                    });
-                }
-            } else {
-                console.log('No features to add to the map.');
+        }
+        source.setData(data); // Update the source with the new data
+    } else {
+        // Create a new source and layer if they don't exist
+        map.addSource('user-locations', {
+            'type': 'geojson',
+            'data': {
+                'type': 'FeatureCollection',
+                'features': [{
+                    'type': 'Feature',
+                    'properties': {
+                        'userId': moodData.userId,
+                        'description': userData.name,
+                        'mood': moodData.mood,
+                        'moodExplanation': moodData.explanation
+                    },
+                    'geometry': {
+                        'type': 'Point',
+                        'coordinates': coordinates
+                    }
+                }]
             }
-        }).catch(error => {
-            console.error("Error getting moods' data: ", error);
-        }); // End of 'then' for moods
-    }).catch(error => {
-        console.error("Error getting users' data: ", error);
-    }); // End of 'then' for users
+        });
 
+        map.addLayer({
+            'id': 'user-locations',
+            'type': 'circle',
+            'source': 'user-locations',
+            'paint': {
+                'circle-color': 'blue',
+                'circle-radius': 12,
+                'circle-stroke-width': 2,
+                'circle-stroke-color': '#ffffff'
+            }
+        });
+    }
+}
+
+function attachMapEventListeners() {
+    // Add 'mouseenter' and 'mouseleave' events
+}
+
+function attachMapEventListeners() {
     map.on('mouseenter', 'user-locations', (e) => {
         if (e.features.length > 0) {
             const properties = e.features[0].properties;
@@ -150,7 +190,7 @@ function addUserLocationsToMap(map) {
             // Create a new popup with the mood and explanation
             currentPopup = new mapboxgl.Popup({ offset: 25 })
                 .setLngLat(e.lngLat)
-                .setHTML(`<strong>${userName}</strong><br>Mood: ${userMood}<br>Explanation: ${moodExplanation} <button onclick="replyToUser('${userName}')">Reply</button>`)
+                .setHTML(`<strong>${userName}</strong><br>Mood: ${userMood}<br>Explanation: ${moodExplanation}<br><button onclick="replyToUser('${userName}')">Request to Engage</button>`)
                 .addTo(map);
 
             map.getCanvas().style.cursor = 'pointer';
@@ -172,25 +212,6 @@ function addUserLocationsToMap(map) {
             currentPopup = null;
             currentUser = null;
         }
-    });
-}
-
-
-
-function showMap() {
-    mapboxgl.accessToken = 'pk.eyJ1IjoiYWRhbWNoZW4zIiwiYSI6ImNsMGZyNWRtZzB2angzanBjcHVkNTQ2YncifQ.fTdfEXaQ70WoIFLZ2QaRmQ'; // Replace with your Mapbox access token
-
-    const map = new mapboxgl.Map({
-        container: 'map',
-        style: 'mapbox://styles/mapbox/streets-v11',
-        center: [-122.964274, 49.236082],
-        zoom: 8.8
-    });
-
-    map.addControl(new mapboxgl.NavigationControl(), 'top-left');
-
-    map.on('load', function() {
-        addUserLocationsToMap(map);
     });
 }
 
