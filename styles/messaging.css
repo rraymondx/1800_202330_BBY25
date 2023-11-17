@@ -316,6 +316,10 @@ body,html {
 	display: none;
 }
 
+#other-user-color-msg {
+	background-color: lightgreen;
+}
+
 @media(max-width: 576px) {
 	.contacts_card {
 		margin-bottom: 15px !important;
