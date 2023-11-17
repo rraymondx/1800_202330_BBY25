@@ -21,7 +21,7 @@
     height: 100%;
     width: 80%;
     position: relative;
-	overflow: scroll;
+    overflow-y: hidden;
 }
 
 #contact-container {
