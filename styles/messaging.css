@@ -261,7 +261,7 @@ body,html {
 
 #message-list-center {
 	width: 75%;
-    background-color: rgba(123, 123, 123, 0.34324);
+	background-color: rgba(137, 186, 255, 0.2);
 	border-radius: 70px;
 	padding: 2.5em;
 	display:grid;
