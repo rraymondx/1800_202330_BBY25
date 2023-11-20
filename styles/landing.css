@@ -6,3 +6,22 @@ body {
 #landing-page-image {
   height: 400px;
 }
+
+#signup-text-container {
+  height: 175px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#signup-text {
+  color: white;
+  font-size: 20pt;
+}
+
+.back-img-signup {
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/banner/signup-today.jpeg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat; 
+}

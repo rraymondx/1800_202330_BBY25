@@ -1,9 +1,9 @@
 // -----------------------------------------------
 // Random Test Function
 // -----------------------------------------------
-function sayHello() {
-  console.log("Hello!");
-}
+// function sayHello() {
+//   console.log("Hello!");
+// }
 
 //------------------------------------------------
 // Call this function when the "logout" button is clicked
