@@ -60,7 +60,7 @@ async function populateMessage(messageArr, i) {
   }
 
   message.querySelector("#msg-goes-here").innerHTML = mesComp[2];
-  messageList.appendChild(message);
+  messageList.insertBefore(message, pointer);
 
   updateScroll();
 }
