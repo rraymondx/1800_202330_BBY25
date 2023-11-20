@@ -187,8 +187,7 @@ function createNewMessage(currentUserId, otherUserId) {
   });
 }
 
-setup();
-
 if (window.location.pathname == "/messaging.html") {
+  setup();
   loadMessageList();
 }
