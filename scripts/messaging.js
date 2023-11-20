@@ -132,9 +132,60 @@ conversations.onSnapshot(doc => {
   }
 });
 
+function doesConvoExist(currentUserId, otherUserId) {
+  let totalConversations = db.collection("conversations").where("Users", "array-contains-any", [currentUserId, otherUserId]); // List of message chains
+  totalConversations.get().then(function(doc) {
+    let conversations = doc.docs;
+    conversations.forEach((doc) => {
+      if (JSON.stringify(doc.data().Users) == JSON.stringify([currentUserId, otherUserId])) {
+        console.log(doc.data().Users);
+        return toGo = doc;
+      }
+    })
+  });
+}
+
+// -------------------------------
+// Creates a new message chain.
+// Loads existing messaging chain.
+// -------------------------------
+function createNewMessage(currentUserId, otherUserId) {
+  console.log(currentUserId + " " + otherUserId);
+  //let userConversations = totalConversations.where("Users", "array-contains", currentUserId);
+
+  let exists = false;
+  let toGo;
+
+  let totalConversations = db.collection("conversations").where("Users", "array-contains-any", [currentUserId, otherUserId]); // List of message chains
+  totalConversations.get().then(function(doc) {
+    let conversations = doc.docs;
+    conversations.forEach((doc) => {
+      if (JSON.stringify(doc.data().Users.sort()) == JSON.stringify([currentUserId, otherUserId].sort())) {
+        exists = true;
+        toGo = doc;
+      }
+    })
+  }).then(function() {
+    if (exists) {
+      localStorage.setItem("convoID", toGo.id);
+      window.location.assign("/messaging.html");
+    } else {
+      db.collection("conversations").add({
+        Users: [currentUserId, otherUserId]
+      }).then(function (doc) {
+        localStorage.setItem("convoID", doc.id);
+        window.location.assign("/messaging.html");
+        console.log("Succes!");
+      }).catch(function (error) {
+        console.log("Error updating user data: " + error);
+      });
+    }
+  });
+}
+
 getUserId();
+//userIcon();
 
-userIcon();
-console.log(userIcon);
-
-loadMessageList();
+if (window.location.pathname == "/messaging.html") {
+  loadMessageList();
+}

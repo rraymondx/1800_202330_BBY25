@@ -1,22 +1,11 @@
+var otherUser;
+var currentUser;
+
 function populateNameClassElements(userName) {
     var nameElements = document.getElementsByClassName('name-goes-here');
     for (let i = 0; i < nameElements.length; i++) {
         nameElements[i].innerHTML = userName;
     }
-}
-
-function getNameFromAuth() {
-    firebase.auth().onAuthStateChanged(user => {
-        if (user) {
-            currentUser = db.collection("users").doc(user.uid);
-            currentUser.get().then(userDoc => {
-                var userName = userDoc.data().name;
-                populateNameClassElements(userName);
-            })
-        } else {
-            document.querySelector("#name-goes-here").innerText = "Anon?";
-        }
-    });
 }
 
 document.getElementById('openFormButton').addEventListener('click', function() {
@@ -26,11 +15,11 @@ document.getElementById('openFormButton').addEventListener('click', function() {
 document.getElementById('moodFormContent').addEventListener('submit', function(event) {
     event.preventDefault();
 
-    var mood = document.getElementById('mood').value;
-    var explanation = document.getElementById('moodExplanation').value;
+    let mood = document.getElementById('mood').value;
+    let explanation = document.getElementById('moodExplanation').value;
 
     // Get the currently signed-in user
-    var user = firebase.auth().currentUser;
+    user = firebase.auth().currentUser;
 
     if (user) {
         // User is signed in, proceed to store the mood
@@ -60,9 +49,6 @@ document.getElementById('moodFormContent').addEventListener('submit', function(e
 let map; // Will hold the reference to the Mapbox map object
 let isPopupOpen = false;
 let currentPopup = null;
-let currentUser = null;
-
-
 
 function addUserLocationsToMap() {
     // Initially load the users and their moods
@@ -119,6 +105,18 @@ function updateUserMoodOnMap(moodData) {
     });
 }
 
+// -----------------------------------------------
+// Creates a new message chaine between the users.
+// -----------------------------------------------
+function replyToUser(otherUserId) {
+    // Get the currently signed-in user
+    currentUserId = firebase.auth().currentUser.uid;
+    if (currentUserId != otherUserId) {
+        createNewMessage(currentUserId, otherUserId);
+    } else {
+        console.log("Cannot message with yourself!");
+    }
+}
 
 function updateMapSource(coordinates, userData, moodData) {
     let source = map.getSource('user-locations');
@@ -198,6 +196,7 @@ function attachMapEventListeners() {
             const properties = e.features[0].properties;
             const userName = properties.description;
             const userMood = properties.mood;
+            const userId = properties.userId;
             const moodExplanation = properties.moodExplanation;
 
             // Close any existing popups
@@ -208,11 +207,10 @@ function attachMapEventListeners() {
             // Create a new popup with the mood and explanation
             currentPopup = new mapboxgl.Popup({ offset: 25 })
                 .setLngLat(e.lngLat)
-                .setHTML(`<strong>${userName}</strong><br>Mood: ${userMood}<br>Explanation: ${moodExplanation}<br><button onclick="replyToUser('${userName}')">Request to Engage</button>`)
+                .setHTML(`<strong>${userName}</strong><br>Mood: ${userMood}<br>Explanation: ${moodExplanation}<br><button onclick="replyToUser('${userId}')">Request to Engage</button>`)
                 .addTo(map);
 
             map.getCanvas().style.cursor = 'pointer';
-            currentUser = userName;
             isPopupOpen = true;
 
             currentPopup.on('close', () => {
