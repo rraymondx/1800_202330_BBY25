@@ -100,6 +100,16 @@ function updateUserMoodOnMap(moodData) {
             if (userData.location) {
                 let coordinates = [userData.location.longitude, userData.location.latitude];
                 updateMapSource(coordinates, userData, moodData);
+
+                let moodTimestamp = moodData.timestamp.toMillis(); // Convert Firestore timestamp to milliseconds
+                let fiveMinutesAgo = Date.now() - (5 * 60 * 1000); // 5 minutes ago in milliseconds
+                if (moodTimestamp > fiveMinutesAgo) {
+                    let popupContent = `<strong>${userData.name}'s Mood:</strong><br>${moodData.mood}<br>${moodData.explanation}`;
+                    let popup = new mapboxgl.Popup({ offset: 25 })
+                        .setLngLat(coordinates)
+                        .setHTML(popupContent)
+                        .addTo(map);
+                }
             }
         }
     });
