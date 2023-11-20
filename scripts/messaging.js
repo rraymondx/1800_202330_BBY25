@@ -5,12 +5,12 @@ const sendButton = document.querySelector("#send_btn");
 const conversations = db.collection("conversations").doc(localStorage.getItem("convoID"));
 
 var currentUser;
-var userIcon;
+var otherUser;
 
 // --------------------------------
 // Gets the ID of the current user.
 // --------------------------------
-function getUserId() {
+function setup() {
   firebase.auth().onAuthStateChanged(user => {
     // Check if user is signed in:
     if (user) {
@@ -25,21 +25,22 @@ function getUserId() {
 // -------------------------
 // Retrieve the user's icon.
 // -------------------------
-function userIcon() {
-  getUserProfileIcon(db.collection("users").doc(currentUser))
-    .then(userImg => {
-      userIcon = '<img src="./images/profiles/' 
-      + userImg + '" class="rounded-circle user_img">';
-    })
-    .catch(error => {
-      console.error("Error getting user profile icon: ", error);
-    });
+function userIcon(message, id) {
+  getUserProfileIcon(db.collection("users").doc(id))
+  .then(userImg => {
+    userIcon = '<img src="./images/profiles/' 
+    + userImg + '" class="rounded-circle user_img">';
+    message.innerHTML = userIcon;
+  })
+  .catch(error => {
+    console.error("Error getting user profile icon: ", error);
+  });
 }
 
 // --------------------------------------------------------------
 // Populate the message list with messages from the conversation.
 // --------------------------------------------------------------
-function populateMessage(messageArr, i) {
+async function populateMessage(messageArr, i) {
   let messageTemplate;
   let message;
 
@@ -55,9 +56,9 @@ function populateMessage(messageArr, i) {
   } else {
     messageTemplate = document.getElementById("message-template-2");
     message = messageTemplate.content.cloneNode(true);
-    //userIcon(message.querySelector("#user-img"), mesComp[1]);
-
+    userIcon(message.querySelector("#user-img"), mesComp[1]);
   }
+
   message.querySelector("#msg-goes-here").innerHTML = mesComp[2];
   messageList.insertBefore(message, pointer);
 
@@ -132,6 +133,9 @@ conversations.onSnapshot(doc => {
   }
 });
 
+// -------------------------------------------------
+// Determine whether the conversation exists or not.
+// -------------------------------------------------
 function doesConvoExist(currentUserId, otherUserId) {
   let totalConversations = db.collection("conversations").where("Users", "array-contains-any", [currentUserId, otherUserId]); // List of message chains
   totalConversations.get().then(function(doc) {
@@ -183,8 +187,7 @@ function createNewMessage(currentUserId, otherUserId) {
   });
 }
 
-getUserId();
-//userIcon();
+setup();
 
 if (window.location.pathname == "/messaging.html") {
   loadMessageList();
