@@ -111,7 +111,7 @@ function updateUserMoodOnMap(moodData) {
                         .addTo(map);
                      setTimeout(function() {
                         popup.remove();
-                    }, 30000); // 60000 milliseconds = 1 minute
+                    }, 15000); // 60000 milliseconds = 1 minute
                 }
             }
         }
