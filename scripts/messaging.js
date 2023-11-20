@@ -56,12 +56,11 @@ async function populateMessage(messageArr, i) {
   } else {
     messageTemplate = document.getElementById("message-template-2");
     message = messageTemplate.content.cloneNode(true);
-    
     userIcon(message.querySelector("#user-img"), mesComp[1]);
   }
 
   message.querySelector("#msg-goes-here").innerHTML = mesComp[2];
-  messageList.insertBefore(message, pointer);
+  messageList.appendChild(message);
 
   updateScroll();
 }
@@ -125,14 +124,19 @@ function uploadMessageToDatabase() {
 // Get the newest message from the datastore
 // DONT TOUCH THIS.
 // -----------------------------------------
+let initState = true;
+
 conversations.onSnapshot(doc => {
   let messageArr = doc.data().messages;
-  if (!doc.exists) {
-    console.log("not working");
-  } else if (messageArr.length > 0) {
-    populateMessage(messageArr, messageArr.length - 1);
+  if (initState) {
+    initState = false;
+  } else {
+    if (messageArr.length > 0 && window.location.pathname == "/messaging.html") {
+      populateMessage(messageArr, messageArr.length - 1);
+    }
   }
 });
+
 
 // -------------------------------------------------
 // Determine whether the conversation exists or not.
