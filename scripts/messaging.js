@@ -28,9 +28,9 @@ function setup() {
 function userIcon(message, id) {
   getUserProfileIcon(db.collection("users").doc(id))
   .then(userImg => {
-    userIcon = '<img src="./images/profiles/' 
+    userIconS = '<img src="./images/profiles/' 
     + userImg + '" class="rounded-circle user_img">';
-    message.innerHTML = userIcon;
+    message.innerHTML = userIconS;
   })
   .catch(error => {
     console.error("Error getting user profile icon: ", error);
@@ -56,6 +56,7 @@ async function populateMessage(messageArr, i) {
   } else {
     messageTemplate = document.getElementById("message-template-2");
     message = messageTemplate.content.cloneNode(true);
+    
     userIcon(message.querySelector("#user-img"), mesComp[1]);
   }
 
