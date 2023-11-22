@@ -26,7 +26,7 @@
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
   <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" />
-  <link rel="Icon" href="./images/Icons/favicon.ico" type="image/x-icon"/>
+  <link rel="Icon" href="./images/Icons/favicon.ico" type="image/x-icon" />
 
   <!-------------------------------------------->
   <!------------- Other libraries -------------->
@@ -41,12 +41,14 @@
   <link href="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.css" rel="stylesheet">
   <script src="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.js"></script>
   <link href="https://api.mapbox.com/mapbox-assembly/v1.3.0/assembly.min.css" rel="stylesheet">
-    
-  <!-- Load the `mapbox-gl-geocoder` plugin. -->
-  <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
-  <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css" type="text/css">
 
-  </head>
+  <!-- Load the `mapbox-gl-geocoder` plugin. -->
+  <script
+    src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
+  <link rel="stylesheet"
+    href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css" type="text/css">
+
+</head>
 
 <body>
 
@@ -55,48 +57,48 @@
   </div>
 
 
-  
 
-<!-- Main Body -->
-    <main>
+
+  <!-- Main Body -->
+  <main>
 
     <button id="openFormButton">Select Mood</button>
 
     <div id="moodForm" style="display:none;">
-        <form id="moodFormContent">
-            <label for="mood">Choose a mood:</label>
-            <select name="mood" id="mood">
-                <option value="happy">Happy</option>
-                <option value="sad">Sad</option>
-                <option value="excited">Excited</option>
-                <option value="angry">Angry</option>
-                
-            </select>
+      <form id="moodFormContent">
+        <label for="mood">Choose a mood:</label>
+        <select name="mood" id="mood">
+          <option value="happy">Happy</option>
+          <option value="sad">Sad</option>
+          <option value="excited">Excited</option>
+          <option value="angry">Angry</option>
 
-            <label for="moodExplanation">Explain your mood:</label>
-            <textarea id="moodExplanation" name="moodExplanation" rows="4" cols="50"></textarea>
+        </select>
 
-            <input type="submit" value="Submit">
-        </form>
+        <label for="moodExplanation">Explain your mood:</label>
+        <textarea id="moodExplanation" name="moodExplanation" rows="4" cols="50"></textarea>
+
+        <input type="submit" value="Submit">
+      </form>
     </div>
-    
-    
-        <!-- MAPBOX -->
-        <h2>Here are the locations of nearby users:</h2>
-        <div id='map' style='width: 100%; height: 700px; width: 1400px;'></div>
-        <!-- MAPBOX -->
-        <div>
-            <div class="card">
-            </div>
-            <div class="card-body">
-                <h5 class="card-title"></h5>
-                <p class="card-text"></p>
-            </div>
-        </div>
-    </main>
 
-   <!-- Navbar -->
-   <nav id="navbarPlaceholder"></nav>
+
+    <!-- MAPBOX -->
+    <h2>Here are the locations of nearby users:</h2>
+    <div id='map' style='width: 100%; height: 700px; width: 1400px;'></div>
+    <!-- MAPBOX -->
+    <div>
+      <div class="card">
+      </div>
+      <div class="card-body">
+        <h5 class="card-title"></h5>
+        <p class="card-text"></p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Navbar -->
+  <nav id="navbarPlaceholder"></nav>
 
   <!--------------------------->
   <!-- JavaScript functions -->
@@ -106,7 +108,7 @@
   <script src="./scripts/script.js"></script>
   <script src="./scripts/messaging.js"></script>
   <script src="./scripts/testmain.js"></script>
-  
+
 </body>
 
 
