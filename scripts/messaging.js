@@ -200,3 +200,84 @@ if (window.location.pathname == "/messaging.html") {
 
 
 
+// ------------------------------------
+// Return the other users ID on demand.
+// ------------------------------------
+async function getOtherUserId() {
+  const doc = await conversations.get();
+  const users = doc.data().Users;
+  console.log(users);
+  for (let i = 0; i < users.length; i++) {
+    if (users[i] !== currentUser) {
+      otherUser = users[i]; // Assign to otherUser
+      break; // Exit the loop once the other user is found
+    }
+  }
+  return otherUser; // Return the other user's ID
+}
+
+
+// -------------------------------------------
+// Add the review to the other user's document.
+// -------------------------------------------
+async function addReviewToUser(otherUserId, newRating) {
+  const userRef = db.collection("users").doc(otherUserId);
+  const reviewsRef = userRef.collection("reviews");
+
+  try {
+    // Start a batch to perform multiple write operations as one
+    const batch = db.batch();
+
+    // Add a new review document
+    const newReviewRef = reviewsRef.doc();
+    batch.set(newReviewRef, {
+      rating: newRating,
+      reviewerId: currentUser,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    });
+
+    // Get all reviews to calculate the new average
+    const reviewsSnapshot = await reviewsRef.get();
+    let totalRating = parseInt(newRating);
+    let reviewCount = 1; // Start with 1 to account for the new review
+
+    reviewsSnapshot.forEach(doc => {
+      totalRating += parseInt(doc.data().rating);
+      reviewCount++;
+    });
+
+    // Calculate the new average rating
+    const averageRating = totalRating / reviewCount;
+
+    // Update the user's document with the new average rating
+    batch.update(userRef, { averageRating: averageRating });
+
+    // Commit the batch
+    await batch.commit();
+    console.log("Review added and average updated successfully.");
+  } catch (error) {
+    console.error("Error adding review and updating average: ", error);
+  }
+}
+
+
+// Event listener for DOM content loaded
+document.addEventListener('DOMContentLoaded', async (event) => {
+  // ... (existing code for modal here)
+
+  // Form submission for review
+  const reviewForm = document.getElementById("review-form");
+  reviewForm.addEventListener('submit', async (e) => {
+    e.preventDefault(); // Prevent the default form submission
+    const rating = reviewForm.rating.value; // Get the rating from the form
+
+    // Fetch the other user's ID and then add the review
+    getOtherUserId(conversations).then((otherUserId) => {
+      addReviewToUser(otherUserId, rating);
+    });
+
+    // Hide the modal after submitting the review
+    modal.style.display = "none";
+  });
+});
+
