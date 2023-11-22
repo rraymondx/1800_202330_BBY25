@@ -91,6 +91,8 @@ function updateScroll() {
   messageElement.scrollIntoViewIfNeeded(false);
 }
 
+document.getElementById("message-list").addEventListener("click", updateScroll, false); // Update messages page on scroll.
+
 // ----------------------------------------------------------
 // Generate message code.
 // ----------------------------------------------------------
