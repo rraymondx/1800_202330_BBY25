@@ -50,59 +50,49 @@
 
 </head>
 
-<body class="bg-dark text-secondary">
+<body>
+  
+  <div id="welcome">
+    <h1>Welcome to the Space</h1>
+  </div>
 
   <!-- Main Body -->
-  <div id="moodForm" style="display: none">
-    <div id="mood-form-container">
-      <div id="moodFormContent">
-        <span id="mood-select-exit" class="close" onclick="document.getElementById('moodForm').style.display = 'none';">&times;</span>
-        <form id="form">
-          <div id="mood-select-form-actual">
-            <h1 id="mood-select-header"> Create a post </h1>
-            <label for="moodExplanation">Explain your mood:</label>
-            <textarea id="moodExplanation" name="moodExplanation"></textarea>
-            <label for="mood">Choose a mood:</label>
-            <select name="mood" id="mood">
-              <option value="happy">Happy</option>
-              <option value="sad">Sad</option>
-              <option value="excited">Excited</option>
-              <option value="angry">Angry</option>
-            </select>
-          </div>
-          <input id="mood-form-submit" type="submit" value="Submit">
-        </form>
+  <main>
+
+    <button id="openFormButton">Select Mood</button>
+
+    <div id="moodForm" style="display:none;">
+      <form id="moodFormContent">
+        <label for="mood">Choose a mood:</label>
+        <select name="mood" id="mood">
+          <option value="happy">Happy</option>
+          <option value="sad">Sad</option>
+          <option value="excited">Excited</option>
+          <option value="angry">Angry</option>
+
+        </select>
+
+        <label for="moodExplanation">Explain your mood:</label>
+        <textarea id="moodExplanation" name="moodExplanation" rows="4" cols="50"></textarea>
+
+        <input type="submit" value="Submit">
+      </form>
+    </div>
+
+
+    <!-- MAPBOX -->
+    <h2>Here are the locations of nearby users:</h2>
+    <div id='map' style='width: 100%; height: 700px; width: 1400px;'></div>
+    <!-- MAPBOX -->
+    <div>
+      <div class="card">
+      </div>
+      <div class="card-body">
+        <h5 class="card-title"></h5>
+        <p class="card-text"></p>
       </div>
     </div>
-  </div>
-
-  <div id="space-header">
-    <span id="space-header-actual"> The Space </span>
-  </div>
-
-  <div id="map-container-super">
-    <div id="map-colour-container">
-      <div id="map-container">
-        <!-- MAPBOX -->
-        <div id='map' style="width: 100%; height: 500px; border-radius: 30px;"></div>
-        <!-- MAPBOX -->
-        <div>
-          <div class="card">
-          </div>
-          <div class="card-body">
-            <h5 class="card-title"></h5>
-            <p class="card-text"></p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div id="button-container">
-    <div id="button-colour">
-      <button id="openFormButton">Select Mood</button>
-    </div>
-  </div>
+  </main>
 
   <!-- Navbar -->
   <nav id="navbarPlaceholder"></nav>
@@ -117,5 +107,9 @@
   <script src="./scripts/testmain.js"></script>
 
 </body>
+
+
+
+
 
 </html>

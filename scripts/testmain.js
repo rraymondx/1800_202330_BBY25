@@ -12,6 +12,7 @@ document.getElementById('openFormButton').addEventListener('click', function() {
     document.getElementById('moodForm').style.display = 'flex';
 });
 
+
 document.getElementById('moodFormContent').addEventListener('submit', function(event) {
     event.preventDefault();
 
@@ -44,6 +45,7 @@ document.getElementById('moodFormContent').addEventListener('submit', function(e
     }
 });
 // Existing functions: populateNameClassElements, getNameFromAuth, etc...
+
 
 // Global variables for map interactions
 let map; // Will hold the reference to the Mapbox map object
