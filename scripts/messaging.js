@@ -197,3 +197,4 @@ if (window.location.pathname == "/messaging.html") {
   setup();
   loadMessageList();
 }
+
