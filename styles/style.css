@@ -71,11 +71,12 @@ body {
 
 
 .mobile-nav {
-    background: #F1F1F1;
+    background: #a9e7fb;
     position: fixed;
-    bottom: 0;
+    bottom: 15px;
     height: 65px;
-    width: 100%;
+    width: 90%;
+    border-radius: 60px;
     display: flex;
     justify-content: space-around;
 }
@@ -86,8 +87,22 @@ body {
     align-items: center;
 }
 
+#home-icon img {
+    padding: 1em;
+    height: 120%;
+    width: auto;
+    background-color: rgb(255, 255, 255);
+    border-radius: 60%;
+}
+
 .bloc-icon img {
     width: 30px;
+}
+
+#navbar-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 /* @media screen and (min-width: 600px) {
