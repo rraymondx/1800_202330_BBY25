@@ -91,7 +91,17 @@ function loadInitialUserMoods() {
     });
 }
 
+async function getUserAverageRating(userId) {
+    const userRef = db.collection("users").doc(userId);
+    const doc = await userRef.get();
+    if (doc.exists && doc.data().averageRating !== undefined) {
+        return doc.data().averageRating.toFixed(2); // Assuming averageRating is a number
+    } else {
+        return "No ratings yet"; // Default text if no ratings
+    }
+}
 
+// ...
 function updateUserMoodOnMap(moodData) {
     // Get the user's location and update or add the mood on the map
     db.collection('users').doc(moodData.userId).onSnapshot(doc => {
@@ -104,19 +114,26 @@ function updateUserMoodOnMap(moodData) {
                 let moodTimestamp = moodData.timestamp.toMillis(); // Convert Firestore timestamp to milliseconds
                 let fiveMinutesAgo = Date.now() - (5 * 60 * 1000); // 5 minutes ago in milliseconds
                 if (moodTimestamp > fiveMinutesAgo) {
-                    let popupContent = `<strong>${userData.name}'s Mood:</strong><br>${moodData.mood}<br>${moodData.explanation}`;
-                    let popup = new mapboxgl.Popup({ offset: 25 })
-                        .setLngLat(coordinates)
-                        .setHTML(popupContent)
-                        .addTo(map);
-                     setTimeout(function() {
-                        popup.remove();
-                    }, 15000); // 60000 milliseconds = 1 minute
+                    // Fetch the average rating and then create the popup
+                    getUserAverageRating(moodData.userId).then(averageRating => {
+                        let popupContent = `<strong>${userData.name}'s Mood:</strong><br>${moodData.mood}<br>${moodData.explanation}<br>Average Rating: ${averageRating}`;
+                        let popup = new mapboxgl.Popup({ offset: 25 })
+                            .setLngLat(coordinates)
+                            .setHTML(popupContent)
+                            .addTo(map);
+                         setTimeout(function() {
+                            popup.remove();
+                        }, 15000); // 60000 milliseconds = 1 minute
+                    }).catch(error => {
+                        console.error("Error getting average rating: ", error);
+                    });
                 }
             }
         }
     });
 }
+// ...
+
 
 // -----------------------------------------------
 // Creates a new message chaine between the users.
@@ -200,10 +217,7 @@ function updateMapSource(coordinates, userData, moodData) {
 }
 
 function attachMapEventListeners() {
-    // Add 'mouseenter' and 'mouseleave' events
-}
-
-function attachMapEventListeners() {
+    // When a user location is clicked, open the popup with details including average rating
     map.on('click', 'user-locations', (e) => {
         if (e.features.length > 0) {
             const properties = e.features[0].properties;
@@ -217,32 +231,40 @@ function attachMapEventListeners() {
                 currentPopup.remove();
             }
 
-            // Create a new popup with the mood and explanation
-            currentPopup = new mapboxgl.Popup({ offset: 25 })
-                .setLngLat(e.lngLat)
-                .setHTML(`<strong>${userName}</strong><br>Mood: ${userMood}<br>Explanation: ${moodExplanation}<br><button onclick="replyToUser('${userId}')">Request to Engage</button>`)
-                .addTo(map);
-
-            map.getCanvas().style.cursor = 'pointer';
-            isPopupOpen = true;
-
-            currentPopup.on('close', () => {
-                isPopupOpen = false;
-                currentPopup = null;
-                currentUser = null;
+            // Fetch the average rating and then create the popup
+            getUserAverageRating(userId).then(averageRating => {
+                // Now we have the average rating, we can create the popup content
+                const popupContent = `<strong>${userName}</strong><br>Mood: ${userMood}<br>Explanation: ${moodExplanation}<br>Average Rating: ${averageRating}<br><button onclick="replyToUser('${userId}')">Request to Engage</button>`;
+                currentPopup = new mapboxgl.Popup({ offset: 25 })
+                    .setLngLat(e.lngLat)
+                    .setHTML(popupContent)
+                    .addTo(map);
+                
+                map.getCanvas().style.cursor = 'pointer';
+                isPopupOpen = true;
+                
+                currentPopup.on('close', () => {
+                    isPopupOpen = false;
+                    currentPopup = null;
+                });
+            }).catch(error => {
+                console.error("Error getting average rating: ", error);
             });
         }
     });
 
-    map.on('click', 'user-locations', () => {
+    // When the map is clicked outside of 'user-locations', close any open popups
+    map.on('click', () => {
         if (!isPopupOpen && currentPopup) {
             map.getCanvas().style.cursor = '';
             currentPopup.remove();
             currentPopup = null;
-            currentUser = null;
         }
     });
+
+    // Additional event listeners (e.g., 'mouseenter', 'mouseleave') can be added here as needed
 }
+
 
 function showMap() {
     mapboxgl.accessToken = 'pk.eyJ1IjoiYWRhbWNoZW4zIiwiYSI6ImNsMGZyNWRtZzB2angzanBjcHVkNTQ2YncifQ.fTdfEXaQ70WoIFLZ2QaRmQ';
