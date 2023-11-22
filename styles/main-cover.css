@@ -44,3 +44,7 @@ body {
 .foot-color * {
     color: white;
 }
+
+#main-top {
+    margin-top: 50px;
+}
