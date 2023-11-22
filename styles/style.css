@@ -88,11 +88,12 @@ body {
 }
 
 #home-icon img {
-    padding: 1em;
-    height: 120%;
-    width: auto;
     background-color: rgb(255, 255, 255);
     border-radius: 60%;
+    padding: 0.7em;
+    height: 130%;
+    width: auto;
+
 }
 
 .bloc-icon img {
