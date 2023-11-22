@@ -5,3 +5,26 @@
   align-items: center;
   justify-content: center;
 }
+
+#main-banner {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+#main-banner-icon {
+  width: 100%;
+}
+
+#auth-container {
+  display: flex;
+  justify-content: center;
+  background-color: white;
+  border-radius: 20px;
+  margin: 50px 30px 50px 30px;
+}
+
+#firebaseui-auth-container {
+  width: 80%;
+}
