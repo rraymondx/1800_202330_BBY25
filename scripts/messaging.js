@@ -90,7 +90,6 @@ function updateScroll() {
   let messageElement = document.getElementById("messages-bottom-pointer");
   messageElement.scrollIntoViewIfNeeded(false);
 }
-
 document.getElementById("message-list").addEventListener("click", updateScroll, false); // Update messages page on scroll.
 
 // ----------------------------------------------------------
