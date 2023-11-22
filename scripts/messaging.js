@@ -198,3 +198,32 @@ if (window.location.pathname == "/messaging.html") {
   loadMessageList();
 }
 
+// ------------------------------------
+// Return the other users ID on demand.
+// ------------------------------------
+function getOtherUserId() {
+  conversations.get().then((doc) => {
+    doc.data().Users;
+    console.log(doc.data().Users);
+    for(let i =0; i< doc.data().Users.length; i++) {
+      if (doc.data().Users[i] != currentUser) {
+        return doc.data().Users[i];
+      }
+    }
+  });
+}
+
+document.addEventListener('DOMContentLoaded', (event) => {
+	var modal = document.getElementById("reviewModal");
+	var btn = document.getElementById("review-btn");
+
+	btn.onclick = function() {
+		modal.style.display = "block";
+	}
+
+	window.onclick = function(event) {
+		if (event.target == modal) {
+			modal.style.display = "none";
+		}
+	}
+	});
