@@ -109,7 +109,20 @@
 	<script src="./scripts/messaging.js"></script>
 
 <script>
+	document.addEventListener('DOMContentLoaded', (event) => {
+	var modal = document.getElementById("reviewModal");
+	var btn = document.getElementById("review-btn");
 
+	btn.onclick = function() {
+		modal.style.display = "block";
+	}
+
+	window.onclick = function(event) {
+		if (event.target == modal) {
+			modal.style.display = "none";
+		}
+	}
+	});
 </script>
 
 </body>
