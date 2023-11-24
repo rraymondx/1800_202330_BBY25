@@ -37,7 +37,14 @@ body {
     justify-content: center;
 }
 
-#message-text-container {
+#space-text-container {
+    height: 175px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#resources-text-container {
     height: 175px;
     display: flex;
     align-items: center;
