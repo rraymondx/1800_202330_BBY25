@@ -150,6 +150,14 @@ p {
   margin-left: 35px;
 }
 
-#button-container {
-  margin-top: -35px;
+/* space buttons */
+#space-buttons {
+  height: 55px;
+  display: flex;
+  justify-content: center;
+}
+
+#space-buttons-inner {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
 }

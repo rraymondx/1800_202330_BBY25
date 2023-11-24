@@ -125,6 +125,7 @@ body {
 #button-container-s {
     display: flex;
     justify-content: left;
+    height: 100%;
 }
 
 #button-colour {
