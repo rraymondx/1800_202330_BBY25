@@ -19,6 +19,13 @@ body {
     background-repeat: no-repeat; 
 }
 
+.back-img-3 {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/banner/mental-health-banner.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat; 
+}
+
 #footer-color {
     color: white;
 }
@@ -48,3 +55,17 @@ body {
 #main-top {
     margin-top: 50px;
 }
+
+.space-header {
+    display: flex;
+    justify-content: left;
+}
+
+#space-h2 {
+    color: white;
+}
+
+#space-p {
+    font-size: 12pt;
+}
+
