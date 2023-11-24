@@ -250,20 +250,39 @@ body,html {
 
 /* Custom Styles */
 
+#super {
+	padding-top: 40px;
+	display: flex;
+	justify-content: center;
+	height: 85%;
+}
+
 #chat-display {
+	width: 90%;
+	height: 100%;
+    background-color: rgba(137, 186, 255, 0.2);
+	border-radius: 70px;
+	padding: 1em;
+}
+
+#message-list-display {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	height: 75%;
+	padding-bottom: 3em;
+}
+
+#message-list {
 	height: 100%;
 }
 
 #message-list-center {
 	width: 90%;
-    background-color: rgba(137, 186, 255, 0.2);
+	height: 90%;
 	border-radius: 70px;
-	padding: 2.5em;
 	display:grid;
-	grid-template-rows: 75vh min-content;
+	grid-template-rows: 99% min-content;
 }
 
 #messages-container {
@@ -285,6 +304,53 @@ body,html {
 	color: black;
 }
 
+/* Review Card Style */
+
+#other-user-card {
+	padding: 2.5em;
+	display: flex;
+	justify-content: left;
+	align-items: center;
+}
+
+#other-user-card-color {
+	height: 60%;
+	width: 70%;
+	background-color: rgba(155, 155, 155, 0.2);
+	border-radius: 30px;
+}
+
+#container-grid {
+	display: grid;
+	grid-template-columns: 40% 60%;
+}
+
+#contact-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#other-user-details {
+	width: 100%;
+}
+
+#user-name {
+	font-weight: bold;
+	font-size: 18pt;
+	color: #50cfe1;
+}
+
+/* Container grid children */
+
+#contact-container {
+	padding: 1em;
+}
+
+#other-user-details {
+	padding: 1em 0 1em 0;
+}
+
 /* Review Styles */
 
 #reviewModal {
@@ -300,41 +366,48 @@ body,html {
 	z-index: 1000;
 }
 
-#mood-form-container {
+#review-form-container {
 	padding-top: 80px;
 	width: 80%;
 	height: 80%;
 }
 
-#moodFormContent {
+#modal-content {
 	background-color: rgb(255, 255, 255);
 	padding: 20px;
 	border-radius: 30px;
 	height: 80%;
 }
 
-#mood-select-exit {
+#review-select-exit {
 	margin-left: 95%;
 }
 
-#mood-select-header {
+#review-select-header {
 	font-size: 24pt;
 	color: black;
 	margin-bottom: 20px;
 }
 
-#form {
+#review-form {
 	height: 90%;
 }
 
-#mood-select-form-actual {
-	display: grid;
-	height: 60%;
+#review-btn {
+	color: white;
 }
 
-#mood-form-submit {
+#review-select-form-actual {
+	display: grid;
+	height: 80%;
+}
+
+#float-middle {
+	height: 40%;
 	bottom: 0;
-	margin: 10em 40% 5em 40%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 #button-container {
