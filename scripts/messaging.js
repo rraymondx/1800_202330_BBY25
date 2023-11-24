@@ -138,7 +138,6 @@ conversations.onSnapshot(doc => {
   }
 });
 
-
 // -------------------------------------------------
 // Determine whether the conversation exists or not.
 // -------------------------------------------------
