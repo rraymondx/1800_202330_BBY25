@@ -40,24 +40,23 @@
 
 <body class="bg-dark text-secondary">
 
-	<div id="reviewModal" class="modal" style="display: none">
+	<div id="reviewModal" style="display: none">
 		<div id="review-form-container">
-			<div class="modal-content">
+			<div id="modal-content">
 				<span id="review-select-exit" class="close" onclick="document.getElementById('reviewModal').style.display = 'none';">&times;</span>
 				<form id="review-form">
 				<div id="review-select-form-actual">
-					<h2>Rate User</h2>
+					<h2 id="review-select-header">Rate User</h2>
 					<label for="rating">Rating (out of 5):</label>
 					<input type="number" id="rating" name="rating" min="1" max="5" required>
 				</div>
-				<input type="submit" value="Submit Review">
+				<div id="float-middle">
+					<input id="review-form-submit" type="submit" value="Submit Review">
+				</div>
 				</form>
 			</div>
 		</div>
 	</div>
-	  
-	  <!-- Trigger/Open The Modal -->
-	  <button id="review-btn">Rate User</button>
 	  
 	<template id="message-template-1">
 		<div class="d-flex justify-content-end mb-4">
@@ -80,24 +79,49 @@
 		</div>
 	</template>
 
-	<div id="chat-display">
-		<div id="message-list-center">
-			<div id="message-list">
-				<div id="messages-container">
-					<div id="messages-bottom-pointer"></div>
+	<div id="super">
+		<div id="chat-display">
+			<!-- Trigger/Open The Modal -->
+			<div id="other-user-card">
+				<div id="other-user-card-color">
+					<div id="container-grid">
+						<div id="contact-container" class="clearfix">
+							<div id="best-user-image"></div>
+						</div>
+						<div id="other-user-details">
+							<div id="other-user-details-info">
+								<div id="user-name-container" class="about">
+									<span id="user-name" class="name">Vincent Porter</span>
+								</div>
+								<div id="button-container-s">
+									<div id="button-colour">
+										<button id="review-btn">Rate User</button>
+									</div>
+								  </div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
-			<div class="container">
-				<form onsubmit="uploadMessageToDatabase();return false" id="message-enter">
-					<fieldset class="mb-3" id="personalInfoFields">
-						<input type="text" id="message-input" placeholder="Enter a message..."/>
-						<!--<button class="btn btn-info" id="send-button">Send</button>-->
-					</fieldset>
-				</form>
+			<div id="message-list-display">
+				<div id="message-list-center">
+					<div id="message-list">
+						<div id="messages-container">
+							<div id="messages-bottom-pointer"></div>
+						</div>
+					</div>
+					<div class="container">
+						<form onsubmit="uploadMessageToDatabase();return false" id="message-enter">
+							<fieldset class="mb-3" id="personalInfoFields">
+								<input type="text" id="message-input" placeholder="Enter a message..."/>
+								<!--<button class="btn btn-info" id="send-button">Send</button>-->
+							</fieldset>
+						</form>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
-
 
 	<!-- Navbar -->
 	<nav id="navbarPlaceholder"></nav>
@@ -111,23 +135,6 @@
 	<script src="./scripts/loadProfile.js"></script>
 	<script src="./scripts/conversations.js"></script>
 	<script src="./scripts/messaging.js"></script>
-
-<script>
-	document.addEventListener('DOMContentLoaded', (event) => {
-	var modal = document.getElementById("reviewModal");
-	var btn = document.getElementById("review-btn");
-
-	btn.onclick = function() {
-		modal.style.display = "block";
-	}
-
-	window.onclick = function(event) {
-		if (event.target == modal) {
-			modal.style.display = "none";
-		}
-	}
-	});
-</script>
 
 </body>
 

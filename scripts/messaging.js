@@ -154,6 +154,10 @@ function doesConvoExist(currentUserId, otherUserId) {
   });
 }
 
+document.getElementById('review-btn').addEventListener('click', function() {
+  document.getElementById('reviewModal').style.display = 'flex';
+});
+
 // -------------------------------
 // Creates a new message chain.
 // Loads existing messaging chain.
@@ -184,7 +188,6 @@ function createNewMessage(currentUserId, otherUserId) {
       }).then(function (doc) {
         localStorage.setItem("convoID", doc.id);
         window.location.assign("/messaging.html");
-        console.log("Succes!");
       }).catch(function (error) {
         console.log("Error updating user data: " + error);
       });
@@ -194,10 +197,9 @@ function createNewMessage(currentUserId, otherUserId) {
 
 if (window.location.pathname == "/messaging.html") {
   setup();
-  loadMessageList();
+  loadMessageList();  
+  generateCard();
 }
-
-
 
 // ------------------------------------
 // Return the other users ID on demand.
@@ -205,7 +207,6 @@ if (window.location.pathname == "/messaging.html") {
 async function getOtherUserId() {
   const doc = await conversations.get();
   const users = doc.data().Users;
-  console.log(users);
   for (let i = 0; i < users.length; i++) {
     if (users[i] !== currentUser) {
       otherUser = users[i]; // Assign to otherUser
@@ -215,6 +216,21 @@ async function getOtherUserId() {
   return otherUser; // Return the other user's ID
 }
 
+// --------------------
+// Generate convo list.
+// --------------------
+async function generateCard() {
+  let conversation = document.getElementById("other-user-card");
+
+  let otherUserId = await getOtherUserId();
+  let otherUser = db.collection("users").doc(otherUserId);
+  let otherUserName = await getUserProfileName(otherUser);
+  let otherUserIcon = await getUserProfileIcon(otherUser);
+
+  conversation.querySelector("#best-user-image").innerHTML = '<img src="./images/profiles/' 
+  + otherUserIcon + '" class="rounded-circle user_img">';
+  conversation.querySelector("#user-name").innerHTML = otherUserName;
+}
 
 // -------------------------------------------
 // Add the review to the other user's document.
@@ -253,12 +269,10 @@ async function addReviewToUser(otherUserId, newRating) {
 
     // Commit the batch
     await batch.commit();
-    console.log("Review added and average updated successfully.");
   } catch (error) {
     console.error("Error adding review and updating average: ", error);
   }
 }
-
 
 // Event listener for DOM content loaded
 document.addEventListener('DOMContentLoaded', async (event) => {
@@ -276,7 +290,6 @@ document.addEventListener('DOMContentLoaded', async (event) => {
     });
 
     // Hide the modal after submitting the review
-    modal.style.display = "none";
+    document.getElementById("reviewModal").style.display = "none";
   });
 });
-
