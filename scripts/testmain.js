@@ -311,4 +311,43 @@ function initializeMapWithDefaultLocation() {
 
 showMap();
 
+const deleteButton = document.getElementById('deleteButton');
+
+deleteButton.addEventListener('click', function(event) {
+    // Initialize Firestore
+
+    // Get the user ID from the currently logged-in user
+    // This assumes you have authentication set up and can get the current user's ID
+    const userId = firebase.auth().currentUser.uid;
+
+    // Now we need to find the moodId associated with this userId.
+    // This is a two-step process: first, we query for the mood document(s),
+    // then we delete the document(s) found.
+    // The exact query depends on how your moods are structured in relation to the userId.
+
+    db.collection('moods')
+      .where('userId', '==', userId)
+      // If there are multiple moods per user and you need to determine which one to delete,
+      // you may need additional logic to select the correct moodId.
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          // doc.data() is never undefined for query doc snapshots
+          console.log(doc.id, " => ", doc.data());
+          // Assuming we want to delete the mood document we found.
+          db.collection('moods').doc(doc.id).delete().then(() => {
+            console.log("Document successfully deleted!");
+            window.alert("delete success");
+            location.reload();
+          }).catch(error => {
+            console.error("Error removing document: ", error);
+          });
+        });
+      })
+      .catch(error => {
+        console.log("Error getting documents: ", error);
+      });
+});
+
+
 

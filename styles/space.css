@@ -73,7 +73,8 @@ body {
   align-items: center;
   height: 70vh;
   width: 100%;
-  padding: 1em 2em 0 2em;
+  /* padding: 1em 2em 0 2em; */
+  padding: 0em 2em 3em 2em;
 }
 
 #map-colour-container {
@@ -126,14 +127,29 @@ body {
   margin: 10em 40% 5em 40%;
 }
 
-/* #button-container {
+#button-container {
   display: flex;
   justify-content: center;
+  margin-top: -10px;
 }
 
-#button-colour {
-  padding: 4%;
+#space-start-message {
+  margin-top: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+p {
   color: white;
-  background-color: rgba(137, 186, 255, 0.2);
-  border-radius: 30px;
-} */
+}
+
+#nearby-user {
+  margin-top: 35px;
+  margin-bottom: -30px;
+  margin-left: 35px;
+}
+
+#button-container {
+  margin-top: -35px;
+}

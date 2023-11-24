@@ -150,13 +150,22 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
   
+  // --------------- //
+  // Main Page Buttons
+  // --------------- //
   document.getElementById("messages-text-container").addEventListener('click', () => {
     window.location.href = "./conversations.html";
   }, false)
 
-  document.getElementById("message-text-container").addEventListener('click', () => {
+  document.getElementById("space-text-container").addEventListener('click', () => {
     window.location.href = "./space.html";
   }, false)
+
+  document.getElementById("resources-text-container").addEventListener('click',() => {
+    window.location.href = "./resources.html"
+  }, false)
+
+  document.getElementById("")
 
   showMap();
 
