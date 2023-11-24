@@ -93,11 +93,15 @@ body {
     padding: 0.7em;
     height: 130%;
     width: auto;
-
 }
 
 .bloc-icon img {
     width: 30px;
+}
+
+#bloc-icon-please:active {
+    background-color: white;
+    border-radius: 20px;
 }
 
 #navbar-container {
