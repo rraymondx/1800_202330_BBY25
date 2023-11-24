@@ -126,7 +126,7 @@ body {
   margin: 10em 40% 5em 40%;
 }
 
-#button-container {
+/* #button-container {
   display: flex;
   justify-content: center;
 }
@@ -136,4 +136,4 @@ body {
   color: white;
   background-color: rgba(137, 186, 255, 0.2);
   border-radius: 30px;
-}
+} */

@@ -56,19 +56,27 @@
   <div id="moodForm" style="display: none">
     <div id="mood-form-container">
       <div id="moodFormContent">
-        <span id="mood-select-exit" class="close" onclick="document.getElementById('moodForm').style.display = 'none';">&times;</span>
+        <span id="mood-select-exit" class="close"
+          onclick="document.getElementById('moodForm').style.display = 'none';">&times;</span>
         <form id="form">
           <div id="mood-select-form-actual">
-            <h1 id="mood-select-header"> Create a post </h1>
-            <label for="moodExplanation">Explain your mood:</label>
-            <textarea id="moodExplanation" name="moodExplanation"></textarea>
+            <h1 id="mood-select-header"> Share your Mood...</h1>
             <label for="mood">Choose a mood:</label>
             <select name="mood" id="mood">
               <option value="happy">Happy</option>
               <option value="sad">Sad</option>
-              <option value="excited">Excited</option>
+              <option value="afraid">Afraid</option>
+              <option value="disgusted">Disgusted</option>
               <option value="angry">Angry</option>
+              <option value="surprised">Surprised</option>
+              <option value="contemptuous">Contemptuous</option>
+              <option value="curious">Curious</option>
+              <option value="joyful">Joyful</option>
+              <option value="trusting">Trusting</option>
             </select>
+            <br>
+            <label for="moodExplanation">Explain your mood:</label>
+            <textarea id="moodExplanation" name="moodExplanation"></textarea>
           </div>
           <input id="mood-form-submit" type="submit" value="Submit">
         </form>
@@ -100,7 +108,7 @@
 
   <div id="button-container">
     <div id="button-colour">
-      <button id="openFormButton">Select Mood</button>
+      <button id="openFormButton">Post Now</button>
     </div>
   </div>
 

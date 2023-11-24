@@ -66,7 +66,7 @@ body {
 
 /*-----------------------------
             NAVBAR      
----------------------------- */ 
+---------------------------- */
 
 
 
@@ -112,3 +112,14 @@ body {
     }
 } */
 
+#button-container {
+    display: flex;
+    justify-content: center;
+}
+
+#button-colour {
+    padding: 4%;
+    color: white;
+    background-color: rgba(137, 186, 255, 0.2);
+    border-radius: 30px;
+}
