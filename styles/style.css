@@ -85,6 +85,14 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 50px;
+}
+
+.bloc-icon-1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
 }
 
 #home-icon img {
@@ -96,12 +104,13 @@ body {
 }
 
 .bloc-icon img {
-    width: 30px;
+    width: 50px;
 }
 
-#bloc-icon-please:active {
-    background-color: white;
-    border-radius: 20px;
+.bloc-icon:active {
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 2em;
+    border-radius: 60px;
 }
 
 #navbar-container {

@@ -1,57 +1,68 @@
 body {
-    padding: 0;
-    margin: 0;
+  padding: 0;
+  margin: 0;
 }
 
 .centerify {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .mapboxgl-popup button[onclick*="replyToUser"] {
-    background-color: blue; /* Change to your desired color */
-    color: white; /* Change to your desired text color */
-    border: none;
-    padding: 5px;
-    border-radius: 1px;
-    cursor: pointer;
+  background-color: blue;
+  /* Change to your desired color */
+  color: white;
+  /* Change to your desired text color */
+  border: none;
+  padding: 5px;
+  border-radius: 1px;
+  cursor: pointer;
 }
 
 .mapboxgl-popup button[onclick*="replyToUser"]:hover {
-    background-color: darkblue; /* Change for hover effect */
-    color: yellow;
-    font-size: 14pt;
+  background-color: darkblue;
+  /* Change for hover effect */
+  color: yellow;
+  font-size: 14pt;
 }
 
 .mapboxgl-popup .mapboxgl-popup-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
-  
-  @keyframes rotate {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
   }
-  
-  #moodForm {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
+
+  to {
+    transform: rotate(360deg);
   }
+}
+
+.bloc-icon-1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+}
+
+#moodForm {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
 
 /* Not Bavneet Styles */
 
@@ -169,7 +180,6 @@ p {
   height: 100%;
   padding: 1em;
 }
-
 
 #deleteButton {
   height: 100%;
