@@ -1,0 +1,20 @@
+#resources-h1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 70px;
+    font-size: 50pt;
+    color: #50cfe1;
+}
+
+.resource-container-huge {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.resource-card {
+    height: auto;
+    width: 80%;
+}
+
