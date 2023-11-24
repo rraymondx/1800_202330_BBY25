@@ -26,8 +26,8 @@
 	<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
-	<link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css"/>
-	<link rel="Icon" href="./images/Icons/favicon.ico" type="image/x-icon"/>
+	<link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" />
+	<link rel="Icon" href="./images/Icons/favicon.ico" type="image/x-icon" />
 
 	<!-------------------------------------------->
 	<!------------- Other libraries -------------->
@@ -43,21 +43,22 @@
 	<div id="reviewModal" style="display: none">
 		<div id="review-form-container">
 			<div id="modal-content">
-				<span id="review-select-exit" class="close" onclick="document.getElementById('reviewModal').style.display = 'none';">&times;</span>
+				<span id="review-select-exit" class="close"
+					onclick="document.getElementById('reviewModal').style.display = 'none';">&times;</span>
 				<form id="review-form">
-				<div id="review-select-form-actual">
-					<h2 id="review-select-header">Rate User</h2>
-					<label for="rating">Rating (out of 5):</label>
-					<input type="number" id="rating" name="rating" min="1" max="5" required>
-				</div>
-				<div id="float-middle">
-					<input id="review-form-submit" type="submit" value="Submit Review">
-				</div>
+					<div id="review-select-form-actual">
+						<h2 id="review-select-header">Rate User</h2>
+						<label for="rating">Rating (out of 5):</label>
+						<input type="number" id="rating" name="rating" min="1" max="5" required>
+					</div>
+					<div id="float-middle">
+						<input id="review-form-submit" type="submit" value="Submit Review">
+					</div>
 				</form>
 			</div>
 		</div>
 	</div>
-	  
+
 	<template id="message-template-1">
 		<div class="d-flex justify-content-end mb-4">
 			<div class="msg_cotainer">
@@ -69,8 +70,7 @@
 	<template id="message-template-2">
 		<div class="d-flex justify-content-start mb-4">
 			<div id="user-img" class="img_cont_msg">
-				<img src="https://i.ytimg.com/vi/AQLs36FT8Sg/maxresdefault.jpg"
-					class="rounded-circle user_img_msg">
+				<img src="https://i.ytimg.com/vi/AQLs36FT8Sg/maxresdefault.jpg" class="rounded-circle user_img_msg">
 			</div>
 			<div id="other-user-color-msg" class="msg_cotainer">
 				<span id="msg-goes-here"></span>
@@ -91,13 +91,13 @@
 						<div id="other-user-details">
 							<div id="other-user-details-info">
 								<div id="user-name-container" class="about">
-									<span id="user-name" class="name">Vincent Porter</span>
+									<span id="user-name" class="name"></span>
 								</div>
 								<div id="button-container-s">
 									<div id="button-colour">
 										<button id="review-btn">Rate User</button>
 									</div>
-								  </div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -113,7 +113,7 @@
 					<div class="container">
 						<form onsubmit="uploadMessageToDatabase();return false" id="message-enter">
 							<fieldset class="mb-3" id="personalInfoFields">
-								<input type="text" id="message-input" placeholder="Enter a message..."/>
+								<input type="text" id="message-input" placeholder="Enter a message..." />
 								<!--<button class="btn btn-info" id="send-button">Send</button>-->
 							</fieldset>
 						</form>

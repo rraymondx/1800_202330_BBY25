@@ -128,8 +128,27 @@ body {
     height: 100%;
 }
 
+
 #button-colour {
     color: white;
     background-color: rgba(137, 186, 255, 0.2);
     border-radius: 30px;
 }
+
+#button-colour-delete {
+    color: white;
+    background-color: rgba(137, 186, 255, 0.2);
+    border-radius: 30px;
+}
+
+#button-colour:active {
+    background-color: #50cfe1;
+    border-radius: 30px;
+}
+
+#button-colour-delete:active {
+    background-color: red;
+    border-radius: 30px;
+}
+
+
