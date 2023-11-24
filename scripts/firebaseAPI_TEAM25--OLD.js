@@ -2,15 +2,14 @@
 //  Your web app's Firebase configuration
 //----------------------------------------
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyDqkknGDCCxalWw-42VqM3KndrEDX5_Tx0",
-  authDomain: "howru2-fcdff.firebaseapp.com",
-  projectId: "howru2-fcdff",
-  storageBucket: "howru2-fcdff.appspot.com",
-  messagingSenderId: "80926592644",
-  appId: "1:80926592644:web:e978f3a1ebb0f26a843cd1",
-  measurementId: "G-RGZ8C8KKL9"
+  apiKey: "AIzaSyAolTMgUe093R8H1C_pMExAXSyD_c7FGFg",
+  authDomain: "howru-ba5c2.firebaseapp.com",
+  projectId: "howru-ba5c2",
+  storageBucket: "howru-ba5c2.appspot.com",
+  messagingSenderId: "258348900618",
+  appId: "1:258348900618:web:c8ec5d23c6286f277c1af3",
+  measurementId: "G-3218ZKH4Z3"
 };
 
 //--------------------------------------------
