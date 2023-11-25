@@ -8,12 +8,12 @@ function populateNameClassElements(userName) {
     }
 }
 
-document.getElementById('openFormButton').addEventListener('click', function() {
+document.getElementById('openFormButton').addEventListener('click', function () {
     document.getElementById('moodForm').style.display = 'flex';
 });
 
 
-document.getElementById('moodFormContent').addEventListener('submit', function(event) {
+document.getElementById('moodFormContent').addEventListener('submit', function (event) {
     event.preventDefault();
 
     let mood = document.getElementById('mood').value;
@@ -30,18 +30,18 @@ document.getElementById('moodFormContent').addEventListener('submit', function(e
             explanation: explanation,
             timestamp: firebase.firestore.FieldValue.serverTimestamp() // Optional: add a server timestamp
         })
-        .then(function(docRef) {
-            console.log("Document written with ID: ", docRef.id);
-            document.getElementById('moodForm').style.display = 'none';
-            document.getElementById('moodFormContent').reset();
-        })
-        .catch(function(error) {
-            console.error("Error adding document: ", error);
-        });
+            .then(function (docRef) {
+                console.log("Document written with ID: ", docRef.id);
+                document.getElementById('moodForm').style.display = 'none';
+                document.getElementById('moodFormContent').reset();
+            })
+            .catch(function (error) {
+                console.error("Error adding document: ", error);
+            });
     } else {
-        
+
         console.log("No user is signed in.");
-        
+
     }
 });
 // Existing functions: populateNameClassElements, getNameFromAuth, etc...
@@ -123,7 +123,7 @@ function updateUserMoodOnMap(moodData) {
                             .setLngLat(coordinates)
                             .setHTML(popupContent)
                             .addTo(map);
-                         setTimeout(function() {
+                        setTimeout(function () {
                             popup.remove();
                         }, 15000); // 60000 milliseconds = 1 minute
                     }).catch(error => {
@@ -155,7 +155,7 @@ function updateMapSource(coordinates, userData, moodData) {
     if (source) {
         // Obtain the data object from the source to modify it
         let data = source._data;
-        
+
         // Check if the feature for the user already exists
         let featureIndex = data.features.findIndex(feature => feature.properties.userId === moodData.userId);
         if (featureIndex !== -1) {
@@ -178,7 +178,7 @@ function updateMapSource(coordinates, userData, moodData) {
                 }
             });
         }
-        
+
         // After modifications, set the new data on the source
         source.setData(data);
     } else {
@@ -241,10 +241,10 @@ function attachMapEventListeners() {
                     .setLngLat(e.lngLat)
                     .setHTML(popupContent)
                     .addTo(map);
-                
+
                 map.getCanvas().style.cursor = 'pointer';
                 isPopupOpen = true;
-                
+
                 currentPopup.on('close', () => {
                     isPopupOpen = false;
                     currentPopup = null;
@@ -313,7 +313,7 @@ showMap();
 
 const deleteButton = document.getElementById('deleteButton');
 
-deleteButton.addEventListener('click', function(event) {
+deleteButton.addEventListener('click', function (event) {
     // Initialize Firestore
 
     // Get the user ID from the currently logged-in user
@@ -326,27 +326,27 @@ deleteButton.addEventListener('click', function(event) {
     // The exact query depends on how your moods are structured in relation to the userId.
 
     db.collection('moods')
-      .where('userId', '==', userId)
-      // If there are multiple moods per user and you need to determine which one to delete,
-      // you may need additional logic to select the correct moodId.
-      .get()
-      .then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-          // doc.data() is never undefined for query doc snapshots
-          console.log(doc.id, " => ", doc.data());
-          // Assuming we want to delete the mood document we found.
-          db.collection('moods').doc(doc.id).delete().then(() => {
-            console.log("Document successfully deleted!");
-            window.alert("delete success");
-            location.reload();
-          }).catch(error => {
-            console.error("Error removing document: ", error);
-          });
+        .where('userId', '==', userId)
+        // If there are multiple moods per user and you need to determine which one to delete,
+        // you may need additional logic to select the correct moodId.
+        .get()
+        .then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+                // doc.data() is never undefined for query doc snapshots
+                console.log(doc.id, " => ", doc.data());
+                // Assuming we want to delete the mood document we found.
+                db.collection('moods').doc(doc.id).delete().then(() => {
+                    console.log("Document successfully deleted!");
+                    window.alert("delete success");
+                    location.reload();
+                }).catch(error => {
+                    console.error("Error removing document: ", error);
+                });
+            });
+        })
+        .catch(error => {
+            console.log("Error getting documents: ", error);
         });
-      })
-      .catch(error => {
-        console.log("Error getting documents: ", error);
-      });
 });
 
 

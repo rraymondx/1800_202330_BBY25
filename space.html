@@ -33,9 +33,9 @@
   <!-------------------------------------------->
 
   <!-- Link to styles of your own -->
-  <link rel="stylesheet" href="./styles/style.css" />
-  <link rel="stylesheet" href="./styles/landing.css" />
-  <link rel="stylesheet" href="./styles/space.css" />
+  <link rel="stylesheet" href="./styles/style.css"/>
+  <link rel="stylesheet" href="./styles/space.css"/>
+  
 
   <!-- Load Mapbox libraries -->
   <link href="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.css" rel="stylesheet">
@@ -125,7 +125,36 @@
   </div>
 
   <!-- Navbar -->
-  <nav id="navbarPlaceholder"></nav>
+  <!-- <nav id="navbarPlaceholder"></nav> -->
+  <div id="navbar-container">
+    <nav class="mobile-nav">
+      <div id="nav-icon-div">
+        <a href="../index.html" class="bloc-icons">
+          <img id="bloc-icon-please" src="./images/Icons/logout1.png" alt="logout">
+        </a>
+      </div>
+      <div id="nav-icon-div">
+        <a href="#" onclick="history.back();" class="bloc-icons">
+          <img id="bloc-icon-please" src="./images/Icons/back1.png" alt="back">
+        </a>
+      </div>
+      <div id="home-icon-div">
+        <a href="../main.html" id="home-icon" class="bloc-icon-home">
+          <img id="bloc-icon-please-home" src="./images/Icons/home2.png" alt="home">
+        </a>
+      </div>
+      <div id="nav-icon-div">
+        <a href="../space.html" class="bloc-icons">
+          <img id="bloc-icon-please" src="./images/Icons/map1.png" alt="space-map">
+        </a>
+      </div>
+      <div id="nav-icon-div">
+        <a href="../conversations.html" class="bloc-icons">
+          <img id="bloc-icon-please" src="./images/Icons/message1.png" alt="message">
+        </a>
+      </div>
+    </nav>
+  </div>
 
   <!--------------------------->
   <!-- JavaScript functions -->

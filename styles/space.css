@@ -44,12 +44,58 @@ body {
   }
 }
 
-.bloc-icon-1 {
+/* NAVBAR */
+#home-icon-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90px;
+}
+
+#nav-icon-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width:100%;
+}
+
+#nav-icon-div:active {
+  background-color: rgba(255, 255, 255, 0.5);
+  padding: 0.4em;
+  border-radius: 60px;
+}
+
+.bloc-icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+}
+
+#bloc-icon-please-home {
+  background-color: rgb(255, 255, 255);
+  border-radius: 60%;
+  padding: 0.7em;
+  height: 100%;
+  width: auto;
+}
+
+.bloc-icons img {
+  width: 50px;
+}
+
+/* .bloc-icon-home {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100px;
-}
+} */
+
+/* .bloc-icon:active {
+  background-color: rgba(255, 255, 255, 0.5);
+  padding: 0.5em;
+  border-radius: 60px;
+} */
 
 #moodForm {
   position: fixed;
@@ -64,7 +110,7 @@ body {
   z-index: 1000;
 }
 
-/* Not Bavneet Styles */
+/* Not Bavneet Styles (JOKES) */
 
 #space-header {
   padding: 15% 0 0 0;
@@ -84,7 +130,6 @@ body {
   align-items: center;
   height: 60vh;
   width: 100%;
-  /* padding: 1em 2em 0 2em; */
   padding: 0em 2em 1em 2em;
 }
 

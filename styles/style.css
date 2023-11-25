@@ -68,8 +68,6 @@ body {
             NAVBAR      
 ---------------------------- */
 
-
-
 .mobile-nav {
     background: #a9e7fb;
     position: fixed;
@@ -88,23 +86,31 @@ body {
     width: 50px;
 }
 
-.bloc-icon-1 {
+/* .bloc-icon-home {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 50px;
-}
+    width: 70px;
+} */
+
 
 #home-icon img {
     background-color: rgb(255, 255, 255);
     border-radius: 60%;
     padding: 0.7em;
-    height: 130%;
+    height: 140%;
     width: auto;
 }
 
 .bloc-icon img {
     width: 50px;
+}
+
+.bloc-icon-home {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
 }
 
 .bloc-icon:active {
@@ -141,7 +147,6 @@ body {
     height: 100%;
 }
 
-
 #button-colour {
     color: white;
     background-color: rgba(137, 186, 255, 0.2);
@@ -154,14 +159,12 @@ body {
     border-radius: 30px;
 }
 
-#button-colour:active {
-    background-color: #50cfe1;
-    border-radius: 30px;
-}
-
 #button-colour-delete:active {
     background-color: red;
     border-radius: 30px;
 }
 
-
+#button-colour:active {
+    background-color: #50cfe1;
+    border-radius: 30px;
+}
