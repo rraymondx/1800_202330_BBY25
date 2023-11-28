@@ -267,6 +267,8 @@ async function addReviewToUser(otherUserId, newRating) {
     // Update the user's document with the new average rating
     batch.update(userRef, { averageRating: averageRating });
 
+    window.alert("Review submitted.");
+
     // Commit the batch
     await batch.commit();
   } catch (error) {
