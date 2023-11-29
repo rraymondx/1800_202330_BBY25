@@ -146,6 +146,7 @@ function replyToUser(otherUserId) {
     if (currentUserId != otherUserId) {
         createNewMessage(currentUserId, otherUserId);
     } else {
+        window.alert("Cannot message with yourself!");
         console.log("Cannot message with yourself!");
     }
 }
