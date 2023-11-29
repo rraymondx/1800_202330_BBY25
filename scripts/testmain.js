@@ -118,7 +118,7 @@ function updateUserMoodOnMap(moodData) {
                 if (moodTimestamp > fiveMinutesAgo) {
                     // Fetch the average rating and then create the popup
                     getUserAverageRating(moodData.userId).then(averageRating => {
-                        let popupContent = `<strong>${userData.name}'s Mood:</strong><br>${moodData.mood}<br>${moodData.explanation}<br>Average Rating: ${averageRating}`;
+                        let popupContent = `<strong>${userData.name} <br> Mood: ${moodData.mood}<br> Explanation: ${moodData.explanation}<br>Average Rating: ${averageRating}`;
                         let popup = new mapboxgl.Popup({ offset: 25 })
                             .setLngLat(coordinates)
                             .setHTML(popupContent)
@@ -209,7 +209,7 @@ function updateMapSource(coordinates, userData, moodData) {
             'type': 'circle',
             'source': 'user-locations',
             'paint': {
-                'circle-color': 'blue',
+                'circle-color': '#87CEEB',
                 'circle-radius': 12,
                 'circle-stroke-width': 2,
                 'circle-stroke-color': '#ffffff'
@@ -236,7 +236,7 @@ function attachMapEventListeners() {
             // Fetch the average rating and then create the popup
             getUserAverageRating(userId).then(averageRating => {
                 // Now we have the average rating, we can create the popup content
-                const popupContent = `<strong>${userName}</strong><br>Mood: ${userMood}<br>Explanation: ${moodExplanation}<br>Average Rating: ${averageRating}<br><button onclick="replyToUser('${userId}')">Request to Engage</button>`;
+                const popupContent = `<strong>${userName}</strong><br>Mood: ${userMood}<br>Explanation: ${moodExplanation}<br>Average Rating: ${averageRating}<br><button onclick="replyToUser('${userId}')">Connect with User</button>`;
                 currentPopup = new mapboxgl.Popup({ offset: 25 })
                     .setLngLat(e.lngLat)
                     .setHTML(popupContent)
