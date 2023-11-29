@@ -160,7 +160,7 @@ body {
 }
 
 #button-colour-delete:active {
-    background-color: red;
+    background-color: lightpink;
     border-radius: 30px;
 }
 
