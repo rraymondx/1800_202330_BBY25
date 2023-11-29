@@ -10,9 +10,9 @@ body {
 }
 
 .mapboxgl-popup button[onclick*="replyToUser"] {
-  background-color: blue;
+  background-color: #87CEEB;
   /* Change to your desired color */
-  color: white;
+  color: black;
   /* Change to your desired text color */
   border: none;
   padding: 5px;
@@ -21,9 +21,9 @@ body {
 }
 
 .mapboxgl-popup button[onclick*="replyToUser"]:hover {
-  background-color: darkblue;
+  background-color: rgb(53, 60, 254);
   /* Change for hover effect */
-  color: yellow;
+  color: white;
   font-size: 14pt;
 }
 
