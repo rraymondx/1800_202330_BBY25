@@ -376,7 +376,7 @@ body,html {
 	background-color: rgb(255, 255, 255);
 	padding: 20px;
 	border-radius: 30px;
-	height: 80%;
+	height: 40%;
 }
 
 #review-select-exit {
@@ -403,7 +403,6 @@ body,html {
 }
 
 #float-middle {
-	height: 40%;
 	bottom: 0;
 	display: flex;
 	justify-content: center;
