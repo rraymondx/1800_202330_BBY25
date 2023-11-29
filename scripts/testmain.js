@@ -118,7 +118,7 @@ function updateUserMoodOnMap(moodData) {
                 if (moodTimestamp > fiveMinutesAgo) {
                     // Fetch the average rating and then create the popup
                     getUserAverageRating(moodData.userId).then(averageRating => {
-                        let popupContent = `<strong>${userData.name}'s Mood:</strong><br>${moodData.mood}<br>${moodData.explanation}<br>Average Rating: ${averageRating}`;
+                        let popupContent = `<strong>${userData.name} <br> Mood: ${moodData.mood}<br> Explanation: ${moodData.explanation}<br>Average Rating: ${averageRating}`;
                         let popup = new mapboxgl.Popup({ offset: 25 })
                             .setLngLat(coordinates)
                             .setHTML(popupContent)
