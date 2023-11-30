@@ -148,23 +148,39 @@ body {
 }
 
 #button-colour {
+    width: 110%;
     color: white;
     background-color: rgba(137, 186, 255, 0.2);
     border-radius: 30px;
+    padding: 0.5em;
+    display: flex;
+    justify-content: center;
 }
 
 #button-colour-delete {
+    width: 110%;
     color: white;
     background-color: rgba(137, 186, 255, 0.2);
     border-radius: 30px;
+    padding: 0.5em;
+    display: flex;
+    justify-content: center;
 }
 
 #button-colour-delete:active {
+    width: 110%;
     background-color: lightpink;
     border-radius: 30px;
+    padding: 0.5em;
+    display: flex;
+    justify-content: center;
 }
 
 #button-colour:active {
+    width: 110%;
     background-color: #50cfe1;
     border-radius: 30px;
+    padding: 0.5em;
+    display: flex;
+    justify-content: center;
 }

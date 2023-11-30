@@ -58,67 +58,79 @@
       <div id="moodFormContent">
         <span id="mood-select-exit" class="close"
           onclick="document.getElementById('moodForm').style.display = 'none';">&times;</span>
-        <form id="form">
-          <div id="mood-select-form-actual">
-            <h1 id="mood-select-header">Share your mood!</h1>
-            <label for="mood">Choose a mood:</label>
-            <select name="mood" id="mood">
-              <option value="happy">Happy</option>
-              <option value="sad">Sad</option>
-              <option value="afraid">Afraid</option>
-              <option value="disgusted">Disgusted</option>
-              <option value="angry">Angry</option>
-              <option value="surprised">Surprised</option>
-              <option value="contemptuous">Contemptuous</option>
-              <option value="curious">Curious</option>
-              <option value="joyful">Joyful</option>
-              <option value="trusting">Trusting</option>
-            </select>
+          <div id="centered-form">
+          <form id="form">
+            <div id="mood-select-form-actual">
+              <h1 id="mood-select-header">Share your mood!</h1>
+              <label for="mood">Choose a mood:</label>
+              <select name="mood" id="mood">
+                <option value="happy">Happy</option>
+                <option value="sad">Sad</option>
+                <option value="afraid">Afraid</option>
+                <option value="disgusted">Disgusted</option>
+                <option value="angry">Angry</option>
+                <option value="surprised">Surprised</option>
+                <option value="contemptuous">Contemptuous</option>
+                <option value="curious">Curious</option>
+                <option value="joyful">Joyful</option>
+                <option value="trusting">Trusting</option>
+              </select>
+              <br>
+              <label for="moodExplanation">Explain your mood:</label>
+              <textarea id="moodExplanation" name="moodExplanation"></textarea>
+            </div>
             <br>
-            <label for="moodExplanation">Explain your mood:</label>
-            <textarea id="moodExplanation" name="moodExplanation"></textarea>
-          </div>
-          <input id="mood-form-submit" type="submit" value="Submit">
-        </form>
-      </div>
-    </div>
-  </div>
-
-  <div id="space-header">
-    <span id="space-header-actual"> The Space </span>
-  </div>
-  <div id="nearby-user">
-    <p>Nearby user:</p>
-  </div>
-
-  <div id="map-container-super">
-    <div id="map-colour-container">
-      <div id="map-container">
-        <!-- MAPBOX -->
-        <div id='map' style="width: 100%; height: 500px; border-radius: 30px;"></div>
-        <!-- MAPBOX -->
-        <div>
-          <div class="card">
-          </div>
-          <div class="card-body">
-            <h5 class="card-title"></h5>
-            <p class="card-text"></p>
-          </div>
+            <div id="mood-form-submit">
+              <input id="mood-form-submit" type="submit" value="Submit">
+            </div>
+            <br>
+          </form>
         </div>
       </div>
     </div>
   </div>
 
-  <div id="space-buttons">
-    <div id="space-buttons-inner">
-      <div id="button-container">
-        <div id="button-colour">
-          <button id="openFormButton">Post Now</button>
+  <div id="super"> 
+    <div id="top">
+      <div id="space-page-header">
+        <div id="space-header">
+          <span id="space-header-actual"> The Space </span>
+        </div>
+        <div id="nearby-user">
+          <p>Connect with nearby users</p>
         </div>
       </div>
-      <div id="button-container">
-        <div id="button-colour-delete">
-          <button id="deleteButton">Delete now</button>
+    </div>
+
+    <div id="map-container-super">
+      <div id="map-colour-container">
+        <div id="map-container">
+          <!-- MAPBOX -->
+          <div id='map' style="width: 100%; height: 100%; border-radius: 30px;"></div>
+          <!-- MAPBOX -->
+          <div>
+            <div class="card">
+            </div>
+            <div class="card-body">
+              <h5 class="card-title"></h5>
+              <p class="card-text"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="space-buttons">
+      <div id="space-buttons-inner">
+        <div id="button-container">
+          <div id="button-colour">
+            <button id="openFormButton">Post Now</button>
+          </div>
+        </div>
+        <div id="button-container">
+          <div id="button-colour-delete">
+            <button id="deleteButton">Delete now</button>
+          </div>
         </div>
       </div>
     </div>
