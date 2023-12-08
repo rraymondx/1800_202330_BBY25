@@ -1,6 +1,7 @@
 var otherUser;
 var currentUser;
 
+// Function to populate name elements with a given user name
 function populateNameClassElements(userName) {
     var nameElements = document.getElementsByClassName('name-goes-here');
     for (let i = 0; i < nameElements.length; i++) {
@@ -8,11 +9,12 @@ function populateNameClassElements(userName) {
     }
 }
 
+// Event listener for the 'openFormButton' click
 document.getElementById('openFormButton').addEventListener('click', function () {
     document.getElementById('moodForm').style.display = 'flex';
 });
 
-
+// Event listener for the 'moodFormContent' submit
 document.getElementById('moodFormContent').addEventListener('submit', function (event) {
     event.preventDefault();
 
@@ -44,33 +46,32 @@ document.getElementById('moodFormContent').addEventListener('submit', function (
 
     }
 });
-// Existing functions: populateNameClassElements, getNameFromAuth, etc...
 
-
-// Global variables for map interactions
-let map; // Will hold the reference to the Mapbox map object
+let map; 
 let isPopupOpen = false;
 let currentPopup = null;
 
+// Function to add user locations to a map
 function addUserLocationsToMap() {
-    // Initially load the users and their moods
+
     loadInitialUserMoods();
 
-    // Set up a real-time listener for the moods to update them as they change
+   
     db.collection('moods').orderBy('timestamp', 'desc').onSnapshot(snapshot => {
         snapshot.docChanges().forEach(change => {
             if (change.type === 'added' || change.type === 'modified') {
                 let moodData = change.doc.data();
-                // Call a function to update the mood on the map
+               
                 updateUserMoodOnMap(moodData);
             }
         });
     });
 
-    // Attach event listeners for mouse enter and leave on the map
+    
     attachMapEventListeners();
 }
 
+// Function to load initial user moods
 function loadInitialUserMoods() {
     db.collection('users').get().then(allUsers => {
         allUsers.forEach(userDoc => {
@@ -140,9 +141,7 @@ function updateUserMoodOnMap(moodData) {
     });
 }
 
-// -----------------------------------------------
-// Creates a new message chaine between the users.
-// -----------------------------------------------
+// Function to create a message chain between users
 function replyToUser(otherUserId) {
     // Get the currently signed-in user
     currentUserId = firebase.auth().currentUser.uid;
@@ -154,6 +153,7 @@ function replyToUser(otherUserId) {
     }
 }
 
+// Function to update the map source with user mood data
 function updateMapSource(coordinates, userData, moodData) {
     let source = map.getSource('user-locations');
     if (source) {
@@ -222,6 +222,7 @@ function updateMapSource(coordinates, userData, moodData) {
     }
 }
 
+// Function to attach event listeners to the map
 function attachMapEventListeners() {
     // When a user location is clicked, open the popup with details including average rating
     map.on('click', 'user-locations', (e) => {
@@ -271,7 +272,7 @@ function attachMapEventListeners() {
     // Additional event listeners (e.g., 'mouseenter', 'mouseleave') can be added here as needed
 }
 
-
+// Function to display the map
 function showMap() {
     mapboxgl.accessToken = 'pk.eyJ1IjoiYWRhbWNoZW4zIiwiYSI6ImNsMGZyNWRtZzB2angzanBjcHVkNTQ2YncifQ.fTdfEXaQ70WoIFLZ2QaRmQ';
 
@@ -302,6 +303,7 @@ function showMap() {
     }
 }
 
+// Function to initialize the map with a default location
 function initializeMapWithDefaultLocation() {
     map = new mapboxgl.Map({
         container: 'map',
@@ -313,32 +315,21 @@ function initializeMapWithDefaultLocation() {
     map.on('load', addUserLocationsToMap);
 }
 
+// Call the showMap function to display the map
 showMap();
 
+// Get a reference to the 'deleteButton' element and add a click event listener
 const deleteButton = document.getElementById('deleteButton');
 
 deleteButton.addEventListener('click', function (event) {
-    // Initialize Firestore
-
     // Get the user ID from the currently logged-in user
-    // This assumes you have authentication set up and can get the current user's ID
     const userId = firebase.auth().currentUser.uid;
-
-    // Now we need to find the moodId associated with this userId.
-    // This is a two-step process: first, we query for the mood document(s),
-    // then we delete the document(s) found.
-    // The exact query depends on how your moods are structured in relation to the userId.
-
     db.collection('moods')
         .where('userId', '==', userId)
-        // If there are multiple moods per user and you need to determine which one to delete,
-        // you may need additional logic to select the correct moodId.
         .get()
         .then(querySnapshot => {
             querySnapshot.forEach(doc => {
-                // doc.data() is never undefined for query doc snapshots
                 console.log(doc.id, " => ", doc.data());
-                // Assuming we want to delete the mood document we found.
                 db.collection('moods').doc(doc.id).delete().then(() => {
                     console.log("Document successfully deleted!");
                     window.alert("delete success");
