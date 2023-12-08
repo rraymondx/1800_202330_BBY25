@@ -94,9 +94,9 @@ function loadInitialUserMoods() {
     });
 }
 
-//
-// 
-//
+// ---------------------------
+// Retrieves the users rating. 
+// ---------------------------
 async function getUserAverageRating(userId) {
     const userRef = db.collection("users").doc(userId);
     const doc = await userRef.get();
