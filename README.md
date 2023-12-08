@@ -1,40 +1,47 @@
-# Project Title
+# HowRu
+
+Hosted link: HowRu (howru2-fcdff.web.app)
 
 ## 1. Project Description
-State your app in a nutshell, or one-sentence pitch. Give some elaboration on what the core features are.  
-This browser based web application to ... 
+HowRu is a mental health focused social media app. The app provides users with a means of achieving genuine connections with people in their community with features such as localized posting and a built-in messaging feature.
 
-## 2. Names of Contributors
-List team members and/or short bio's here... 
+## 2. Contributors
+Team members:
 * Hi, my name is Raymond. I am excited to learn and build a program from the start!!
 * Hi, my name is Bavneet. I am excited to be here.
 * Hi, my name is Will. I love Git and Github.
 	
 ## 3. Technologies and Resources Used
-List technologies (with version numbers), API's, icons, fonts, images, media or data sources, and other resources that were used.
+
 * HTML, CSS, JavaScript
 * Bootstrap 5.0 (Frontend library)
 * Firebase 8.0 (BAAS - Backend as a Service)
 * MapBox GL
 
 ## 4. Complete setup/installion/usage
-State what a user needs to do when they come to your project.  How do others start using your code or application?
-Here are the steps ...
-* ...
-* ...
-* ...
+For those who want to modify the source code:
+
+* Pull the source code.
+* Run as with local server.
+* Modify code as needed.
+* Do not modify the API keys.
+
+For those who simply want to use the app:
+
+* Click on the link at the top of the page.
+* Create an account.
+* Enjoy.
 
 ## 5. Known Bugs and Limitations
 Here are some known bugs:
-* ...
-* ...
-* ...
+* UI on the phone screen is slightly out of place in some areas.
+* Rating is not limited, users are able to submit as many reviews as they want.
 
 ## 6. Features for Future
 What we'd like to build in the future:
-* ...
-* ...
-* ...
+* Privacy on The Space, posting without the need for location.
+* Customization of user profiles.
+* Change mood selectors and rating slider to icons.
 	
 ## 7. Contents of Folder
 Content of the project folder:
