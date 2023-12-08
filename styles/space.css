@@ -3,6 +3,8 @@ body {
   margin: 0;
 }
 
+/* Mapbox styles */
+
 .centerify {
   display: flex;
   justify-content: center;
@@ -45,6 +47,7 @@ body {
 }
 
 /* Main container */
+
 #super {
   height: 90vh;
   display: grid;
@@ -52,6 +55,7 @@ body {
 }
 
 /* NAVBAR */
+
 #home-icon-div {
   display: flex;
   justify-content: center;
@@ -115,7 +119,7 @@ body {
   z-index: 1000;
 }
 
-/* Not Bavneet Styles (JOKES) */
+/* Body children styles */
 
 #top {
   display: flex;
@@ -148,6 +152,8 @@ body {
   font-weight: bold;
   color: #50cfe1;
 }
+
+/* Map container styles */
 
 #map-container-super {
   display: flex;
@@ -202,6 +208,8 @@ body {
   margin-bottom: 20px;
 }
 
+/* Review form styles */
+
 #form {
   height: 90%;
   width: 80%;
@@ -233,6 +241,7 @@ p {
 }
 
 /* space buttons */
+
 #space-buttons {
   height: 100%;
   display: flex;

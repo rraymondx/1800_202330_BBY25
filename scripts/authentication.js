@@ -26,6 +26,9 @@ var uiConfig = {
             var user = authResult.user;
             navigator.geolocation.getCurrentPosition(function (position) {
                 var userLocation = new firebase.firestore.GeoPoint(position.coords.latitude, position.coords.longitude);
+
+                // Update user location on login.
+                // Get user information on signup.
                 if (authResult.additionalUserInfo.isNewUser) {
                     db.collection("users").doc(user.uid).set({
                         name: user.displayName || "Unknown",

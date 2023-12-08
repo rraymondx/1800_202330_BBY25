@@ -123,7 +123,6 @@ function uploadMessageToDatabase() {
 
 // -----------------------------------------
 // Get the newest message from the datastore
-// DONT TOUCH THIS.
 // -----------------------------------------
 let initState = true;
 
@@ -154,6 +153,9 @@ function doesConvoExist(currentUserId, otherUserId) {
   });
 }
 
+// -----------------------------------------------
+// Handles the display logic for the review modal.
+// -----------------------------------------------
 document.getElementById('review-btn').addEventListener('click', function() {
   document.getElementById('reviewModal').style.display = 'flex';
 });
@@ -179,6 +181,7 @@ function createNewMessage(currentUserId, otherUserId) {
       }
     })
   }).then(function() {
+    // Only transfer to the page if the convo exists.
     if (exists) {
       localStorage.setItem("convoID", toGo.id);
       window.location.assign("/messaging.html");
@@ -193,12 +196,6 @@ function createNewMessage(currentUserId, otherUserId) {
       });
     }
   });
-}
-
-if (window.location.pathname == "/messaging.html") {
-  setup();
-  loadMessageList();  
-  generateCard();
 }
 
 // ------------------------------------
@@ -295,3 +292,12 @@ document.addEventListener('DOMContentLoaded', async (event) => {
     document.getElementById("reviewModal").style.display = "none";
   });
 });
+
+// ---------------------------------------------------------------------
+// Stop functions from being called if we are not on the messaging page.
+// ---------------------------------------------------------------------
+if (window.location.pathname == "/messaging.html") {
+  setup();
+  loadMessageList();  
+  generateCard();
+}

@@ -108,6 +108,7 @@ function toMessages(theConversation) {
     console.log("To messages.");
 }
 
+// Prevent functions from being called off this page.
 if (window.location.pathname == "/conversations.html")
     getUserId();
 

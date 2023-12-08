@@ -93,6 +93,9 @@ function loadInitialUserMoods() {
     });
 }
 
+//
+// 
+//
 async function getUserAverageRating(userId) {
     const userRef = db.collection("users").doc(userId);
     const doc = await userRef.get();
@@ -103,7 +106,9 @@ async function getUserAverageRating(userId) {
     }
 }
 
-// ...
+// ----------------------------------
+// Updates the users data on the map.
+// ----------------------------------
 function updateUserMoodOnMap(moodData) {
     // Get the user's location and update or add the mood on the map
     db.collection('users').doc(moodData.userId).onSnapshot(doc => {
@@ -134,8 +139,6 @@ function updateUserMoodOnMap(moodData) {
         }
     });
 }
-// ...
-
 
 // -----------------------------------------------
 // Creates a new message chaine between the users.
